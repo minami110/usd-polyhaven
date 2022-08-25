@@ -1,0 +1,22 @@
+#usda 1.0
+(
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+    upAxis = "Y"
+)
+
+def "bar_chair_round_01" (
+    prepend apiSchemas = ["MaterialBindingAPI"]
+    prepend references = @./bar_chair_round_01.geo.usdc@
+)
+{
+    rel material:binding = </bar_chair_round_01/looks/bar_chair_round_01>
+
+    def "looks" (
+        prepend references = @./bar_chair_round_01.look.usda@
+    )
+    {
+    }
+}
+
