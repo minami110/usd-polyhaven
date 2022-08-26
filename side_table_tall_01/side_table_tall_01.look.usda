@@ -1,0 +1,16 @@
+#usda 1.0
+(
+    defaultPrim = "looks"
+)
+
+def Scope "looks"
+{
+    def "side_table_tall_01" (
+        references = @../polyheaven_base_look.usda@</base>
+    )
+    {
+        custom asset inputs:texture_basecolor = @./textures/side_table_tall_01_diff_1k.exr@
+        custom asset inputs:texture_arm = @./textures/side_table_tall_01_arm_1k.exr@
+        custom asset inputs:texture_normal = @./textures/side_table_tall_01_nor_gl_1k.exr@
+    }
+}

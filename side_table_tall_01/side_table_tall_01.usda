@@ -1,0 +1,22 @@
+#usda 1.0
+(
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+    upAxis = "Y"
+)
+
+def "side_table_tall_01" (
+    prepend apiSchemas = ["MaterialBindingAPI"]
+    prepend references = @./side_table_tall_01.geo.usdc@
+)
+{
+    rel material:binding = </side_table_tall_01/looks/side_table_tall_01>
+
+    def "looks" (
+        prepend references = @./side_table_tall_01.look.usda@
+    )
+    {
+    }
+}
+
