@@ -1,0 +1,16 @@
+#usda 1.0
+(
+    defaultPrim = "looks"
+)
+
+def Scope "looks"
+{
+    def "tea_set_01" (
+        references = @../polyheaven_base_look.usda@</base>
+    )
+    {
+        custom asset inputs:texture_basecolor = @./textures/tea_set_01_diff_1k.exr@
+        custom asset inputs:texture_arm = @./textures/tea_set_01_arm_1k.exr@
+        custom asset inputs:texture_normal = @./textures/tea_set_01_nor_gl_1k.exr@
+    }
+}

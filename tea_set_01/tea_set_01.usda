@@ -1,0 +1,22 @@
+#usda 1.0
+(
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+    upAxis = "Y"
+)
+
+def "tea_set_01" (
+    prepend apiSchemas = ["MaterialBindingAPI"]
+    prepend references = @./tea_set_01.geo.usdc@
+)
+{
+    rel material:binding = </tea_set_01/looks/tea_set_01>
+
+    def "looks" (
+        prepend references = @./tea_set_01.look.usda@</looks>
+    )
+    {
+    }
+}
+
