@@ -1,0 +1,17 @@
+#usda 1.0
+(
+    defaultPrim = "looks"
+)
+
+def Scope "looks"
+{
+    def "gothic_commode_01" (
+        prepend references = @../polyheaven_base_look.usda@</base>
+    )
+    {
+        custom asset inputs:texture_arm = @./textures/GothicCommode_01_arm_1k.exr@
+        custom asset inputs:texture_basecolor = @./textures/GothicCommode_01_diff_1k.exr@
+        custom asset inputs:texture_normal = @./textures/GothicCommode_01_nor_gl_1k.exr@
+    }
+}
+

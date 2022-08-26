@@ -1,0 +1,26 @@
+#usda 1.0
+(
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+)
+
+def "gothic_commode_01" (
+    prepend apiSchemas = ["MaterialBindingAPI"]
+    assetInfo = {
+        string name = "gothic_commode_01"
+        string version = "1.0"
+    }
+    kind = "component"
+    prepend references = @./gothic_commode_01.geo.usdc@
+)
+{
+    rel material:binding = </gothic_commode_01/looks/gothic_commode_01>
+
+    def "looks" (
+        prepend references = @./gothic_commode_01.look.usda@
+    )
+    {
+    }
+}
+
