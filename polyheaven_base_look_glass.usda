@@ -1,0 +1,71 @@
+#usda 1.0
+
+class Material "base"
+{
+    token outputs:mtlx:surface.connect = </base/mtlxStandardSurface.outputs:out>
+
+    # Custom values
+    custom asset inputs:texture_arm = @@
+    custom asset inputs:texture_normal = @@
+    custom float inputs:ior = 1.52
+    custom float inputs:transmission_dispersion = 64
+    custom float inputs:usenormalmap = 0
+
+    # Material X
+    def Shader "mtlxStandardSurface"
+    {
+        uniform token info:id = "ND_standard_surface_surfaceshader"
+        vector3f inputs:normal.connect = </base/mtlxnormalmap1.outputs:out>
+        float inputs:specular_roughness.connect = </base/mtlxseparate3c1.outputs:outg>
+        float inputs:specular_IOR.connect = </base.inputs:ior>
+        float inputs:transmission = 1
+        float inputs:transmission_dispersion.connect = </base.inputs:transmission_dispersion>
+        token outputs:out
+    }
+
+    def Shader "mtlxnormalmap1"
+    {
+        uniform token info:id = "ND_normalmap"
+        vector3f inputs:in.connect = </base/mtlxMixNormal.outputs:out>
+        vector3f outputs:out
+    }
+
+    def Shader "mtlxMixNormal"
+    {
+        uniform token info:id = "ND_mix_vector3"
+        vector3f inputs:fg.connect = </base/mtlx_normal.outputs:out>
+        vector3f inputs:bg = (0.5, 0.5, 1)
+        float inputs:mix.connect = </base/mtlxUseNormal.outputs:out>
+        vector3f outputs:out
+    }
+
+    def Shader "mtlxUseNormal"
+    {
+        uniform token info:id = "ND_constant_float"
+        float inputs:value.connect = </base.inputs:usenormalmap>
+        float outputs:out
+    }
+
+    def Shader "mtlxseparate3c1"
+    {
+        uniform token info:id = "ND_separate3_color3"
+        color3f inputs:in.connect = </base/mtlx_arm.outputs:out>
+        float outputs:outr
+        float outputs:outb
+        float outputs:outg
+    }
+
+    def Shader "mtlx_arm"
+    {
+        uniform token info:id = "ND_image_color3"
+        asset inputs:file.connect = </base.inputs:texture_arm>
+        color3f outputs:out
+    }
+
+    def Shader "mtlx_normal"
+    {
+        uniform token info:id = "ND_image_vector3"
+        asset inputs:file.connect = </base.inputs:texture_normal>
+        vector3f outputs:out
+    }
+}
