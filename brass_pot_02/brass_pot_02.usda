@@ -1,0 +1,25 @@
+#usda 1.0
+(
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+    upAxis = "Y"
+)
+
+def "brass_pot_02" (
+    prepend apiSchemas = ["MaterialBindingAPI"]
+    prepend references = @./brass_pot_02.geo.usdc@
+)
+{
+    rel material:binding = </brass_pot_02/looks/brass_pot_02>
+
+    def Scope "looks"
+    {
+        def "brass_pot_02" (
+            prepend references = @./brass_pot_02.look.usda@
+        )
+        {
+        }
+    }
+}
+
