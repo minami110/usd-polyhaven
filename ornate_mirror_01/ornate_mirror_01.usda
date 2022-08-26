@@ -1,0 +1,22 @@
+#usda 1.0
+(
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+    upAxis = "Y"
+)
+
+def "ornate_mirror_01" (
+    prepend apiSchemas = ["MaterialBindingAPI"]
+    prepend references = @./ornate_mirror_01.geo.usdc@
+)
+{
+    rel material:binding = </ornate_mirror_01/looks/ornate_mirror_01>
+
+    def "looks" (
+        prepend references = @./ornate_mirror_01.look.usda@
+    )
+    {
+    }
+}
+

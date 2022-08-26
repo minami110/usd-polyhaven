@@ -1,0 +1,16 @@
+#usda 1.0
+(
+    defaultPrim = "looks"
+)
+
+def Scope "looks"
+{
+    def "ornate_mirror_01" (
+        references = @../polyheaven_base_look.usda@</base>
+    )
+    {
+        custom asset inputs:texture_basecolor = @./textures/ornate_mirror_01_diff_1k.exr@
+        custom asset inputs:texture_arm = @./textures/ornate_mirror_01_arm_1k.exr@
+        custom asset inputs:texture_normal = @./textures/ornate_mirror_01_nor_gl_1k.exr@
+    }
+}
