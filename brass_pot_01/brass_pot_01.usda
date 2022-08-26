@@ -1,0 +1,28 @@
+#usda 1.0
+(
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+    upAxis = "Y"
+)
+
+def "brass_pot_01" (
+    prepend apiSchemas = ["MaterialBindingAPI"]
+    prepend references = @./brass_pot_01.geo.usdc@
+)
+{
+    rel material:binding = </brass_pot_01/looks/brass_pot_01>
+
+    over "lid"
+    {
+        matrix4d xformOp:transform:transform1 = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0.20366784185171127, 0, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform:transform1"]
+    }
+
+    def "looks" (
+        prepend references = @./brass_pot_01.look.usda@
+    )
+    {
+    }
+}
+
