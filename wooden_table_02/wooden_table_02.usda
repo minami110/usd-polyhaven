@@ -1,0 +1,22 @@
+#usda 1.0
+(
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+    upAxis = "Y"
+)
+
+def "wooden_table_02" (
+    prepend apiSchemas = ["MaterialBindingAPI"]
+    prepend references = @./wooden_table_02.geo.usdc@
+)
+{
+    rel material:binding = </wooden_table_02/looks/wooden_table_02>
+
+    def "looks" (
+        prepend references = @./wooden_table_02.look.usda@
+    )
+    {
+    }
+}
+

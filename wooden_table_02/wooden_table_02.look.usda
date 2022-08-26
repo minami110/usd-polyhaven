@@ -1,0 +1,16 @@
+#usda 1.0
+(
+    defaultPrim = "looks"
+)
+
+def Scope "looks"
+{
+    def "wooden_table_02" (
+        references = @../polyheaven_base_look.usda@</base>
+    )
+    {
+        custom asset inputs:texture_basecolor = @./textures/WoodenTable_02_diff_1k.exr@
+        custom asset inputs:texture_arm = @./textures/WoodenTable_02_arm_1k.exr@
+        custom asset inputs:texture_normal = @./textures/WoodenTable_02_nor_gl_1k.exr@
+    }
+}
