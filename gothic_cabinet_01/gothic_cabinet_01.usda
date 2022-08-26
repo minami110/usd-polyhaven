@@ -1,0 +1,22 @@
+#usda 1.0
+(
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+    upAxis = "Y"
+)
+
+def "gothic_cabinet_01" (
+    prepend apiSchemas = ["MaterialBindingAPI"]
+    prepend references = @./gothic_cabinet_01.geo.usdc@
+)
+{
+    rel material:binding = </gothic_cabinet_01/looks/gothic_cabinet_01>
+
+    def "looks" (
+        prepend references = @./gothic_cabinet_01.look.usda@
+    )
+    {
+    }
+}
+
