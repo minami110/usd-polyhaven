@@ -1,0 +1,37 @@
+#usda 1.0
+(
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+)
+
+def "mantel_clock_01" (
+    assetInfo = {
+        string name = "mantel_clock_01"
+        string version = "1.0"
+    }
+    kind = "component"
+    prepend references = @./mantel_clock_01.geo.usdc@
+)
+{
+    def "looks" (
+        prepend references = @./mantel_clock_01.look.usda@
+    )
+    {
+    }
+
+    over "body" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </mantel_clock_01/looks/body>
+    }
+
+    over "glass" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </mantel_clock_01/looks/glass>
+    }
+}
+
