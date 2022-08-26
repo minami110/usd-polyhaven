@@ -1,2 +1,5 @@
+# Original .fbx
+*.fbx
+
 # Houdini backup files
 *bak*.hip
