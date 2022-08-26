@@ -1,0 +1,70 @@
+#usda 1.0
+(
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+)
+
+def "vintage_grandfather_clock_01" (
+    assetInfo = {
+        string name = "vintage_grandfather_clock_01"
+        string version = "1.0"
+    }
+    kind = "component"
+    prepend references = @./vintage_grandfather_clock_01.geo.usdc@
+)
+{
+    def "looks" (
+        prepend references = @./vintage_grandfather_clock_01.look.usda@
+    )
+    {
+    }
+
+    over "Body"
+    {
+        uniform token subsetFamily:materialBind:familyType = "nonOverlapping"
+
+        over "material_body" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            uniform token familyName = "materialBind"
+            rel material:binding = </vintage_grandfather_clock_01/looks/body>
+        }
+
+        over "material_glass" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            uniform token familyName = "materialBind"
+            rel material:binding = </vintage_grandfather_clock_01/looks/glass>
+        }
+    }
+
+    over "HourHand"
+    {
+        uniform token subsetFamily:materialBind:familyType = "nonOverlapping"
+
+        over "material_body" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            uniform token familyName = "materialBind"
+            rel material:binding = </vintage_grandfather_clock_01/looks/body>
+        }
+    }
+
+    over "MinuteHand"
+    {
+        uniform token subsetFamily:materialBind:familyType = "nonOverlapping"
+
+        over "material_body" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            uniform token familyName = "materialBind"
+            rel material:binding = </vintage_grandfather_clock_01/looks/body>
+        }
+    }
+}
+

@@ -1,0 +1,30 @@
+#usda 1.0
+(
+    defaultPrim = "looks"
+)
+
+def Scope "looks"
+{
+    def "body" (
+        prepend references = @../polyheaven_base_look.usda@</base>
+    )
+    {
+        custom asset inputs:texture_arm = @./textures/vintage_grandfather_clock_01_arm_1k.exr@
+        custom asset inputs:texture_basecolor = @./textures/vintage_grandfather_clock_01_diff_1k.exr@
+        custom asset inputs:texture_normal = @./textures/vintage_grandfather_clock_01_nor_gl_1k.exr@
+    }
+
+    def Material "glass"
+    {
+        token outputs:mtlx:surface.connect = </looks/glass/mtlxstandard_surface.outputs:out>
+
+        def Shader "mtlxstandard_surface"
+        {
+            uniform token info:id = "ND_standard_surface_surfaceshader"
+            float inputs:specular_IOR = 1.52
+            float inputs:transmission = 1
+            token outputs:out
+        }
+    }
+}
+
