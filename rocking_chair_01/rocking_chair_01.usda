@@ -1,0 +1,22 @@
+#usda 1.0
+(
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+    upAxis = "Y"
+)
+
+def "rocking_chair_01" (
+    prepend apiSchemas = ["MaterialBindingAPI"]
+    prepend references = @./rocking_chair_01.geo.usdc@
+)
+{
+    rel material:binding = </rocking_chair_01/looks/rocking_chair_01>
+
+    def "looks" (
+        prepend references = @./rocking_chair_01.look.usda@
+    )
+    {
+    }
+}
+
