@@ -1,0 +1,26 @@
+#usda 1.0
+(
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+)
+
+def "sofa_01" (
+    prepend apiSchemas = ["MaterialBindingAPI"]
+    assetInfo = {
+        string name = "sofa_01"
+        string version = "1.0"
+    }
+    kind = "component"
+    prepend references = @./sofa_01.geo.usdc@
+)
+{
+    rel material:binding = </sofa_01/looks/sofa_01>
+
+    def "looks" (
+        prepend references = @./sofa_01.look.usda@
+    )
+    {
+    }
+}
+

@@ -1,0 +1,18 @@
+#usda 1.0
+(
+    defaultPrim = "looks"
+)
+
+def Scope "looks"
+{
+    def "sofa_01" (
+        prepend references = @../polyheaven_base_look.usda@</base>
+    )
+    {
+        custom float inputs:ao_intensity = 1
+        custom asset inputs:texture_arm = @./textures/Sofa_01_arm_2k.exr@
+        custom asset inputs:texture_basecolor = @./textures/Sofa_01_diff_2k.exr@
+        custom asset inputs:texture_normal = @./textures/Sofa_01_nor_gl_2k.exr@
+    }
+}
+
