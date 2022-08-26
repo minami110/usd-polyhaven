@@ -1,0 +1,26 @@
+#usda 1.0
+(
+    defaultPrim = "looks"
+)
+
+def Scope "looks"
+{
+    def "pot" (
+        references = @../polyheaven_base_look.usda@</base>
+    )
+    {
+        custom asset inputs:texture_basecolor = @./textures/potted_plant_02_pot_diff_1k.exr@
+        custom asset inputs:texture_arm = @./textures/potted_plant_02_pot_arm_1k.exr@
+        custom asset inputs:texture_normal = @./textures/potted_plant_02_pot_nor_gl_1k.exr@
+    }
+
+    def "leaves" (
+        references = @../polyheaven_base_look_opacity.usda@</base>
+    )  
+    {
+        custom asset inputs:texture_basecolor = @./textures/potted_plant_02_leaves_diff_1k.exr@
+        custom asset inputs:texture_arm = @./textures/potted_plant_02_leaves_arm_1k.exr@
+        custom asset inputs:texture_normal = @./textures/potted_plant_02_leaves_nor_gl_1k.exr@
+        custom asset inputs:texture_opacity = @./textures/potted_plant_02_leaves_alpha_1k.exr@
+    }
+}

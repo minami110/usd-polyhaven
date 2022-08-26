@@ -1,0 +1,58 @@
+#usda 1.0
+(
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+    upAxis = "Y"
+)
+
+def "potted_plant_02" (
+    prepend references = @./potted_plant_02.geo.usdc@
+)
+{
+    def "looks" (
+        prepend references = @./potted_plant_02.look.usda@
+    )
+    {
+    }
+
+    over "dirt"
+    {
+        uniform token subsetFamily:materialBind:familyType = "nonOverlapping"
+
+        over "material_pot" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            uniform token familyName = "materialBind"
+            rel material:binding = </potted_plant_02/looks/pot>
+        }
+    }
+
+    over "pot"
+    {
+        uniform token subsetFamily:materialBind:familyType = "nonOverlapping"
+
+        over "material_pot" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            uniform token familyName = "materialBind"
+            rel material:binding = </potted_plant_02/looks/pot>
+        }
+    }
+
+    over "leaves"
+    {
+        uniform token subsetFamily:materialBind:familyType = "nonOverlapping"
+
+        over "material_leaves" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            uniform token familyName = "materialBind"
+            rel material:binding = </potted_plant_02/looks/leaves>
+        }
+    }
+}
+
