@@ -1,0 +1,14 @@
+#usda 1.0
+(
+    defaultPrim = "sofa_03"
+)
+
+def "sofa_03" (
+    references = @../polyheaven_base_look_opacity.usda@</base>
+)
+{
+    custom asset inputs:texture_basecolor = @./textures/sofa_03_diff_2k.exr@
+    custom asset inputs:texture_arm = @./textures/sofa_03_arm_2k.exr@
+    custom asset inputs:texture_normal = @./textures/sofa_03_nor_gl_2k.exr@
+    custom asset inputs:texture_opacity = @./textures/sofa_03_opacity_2k.exr@
+}
