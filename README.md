@@ -1,2 +1,3 @@
 # polyheaven
-PolyHeaven USD models
+- PolyHeaven USD models
+- [Poly Haven](https://polyhaven.com/)
