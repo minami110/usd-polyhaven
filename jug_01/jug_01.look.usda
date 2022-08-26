@@ -1,0 +1,17 @@
+#usda 1.0
+(
+    defaultPrim = "looks"
+)
+
+def Scope "looks"
+{
+    def "jug_01" (
+        prepend references = @../polyheaven_base_look.usda@</base>
+    )
+    {
+        custom asset inputs:texture_arm = @./textures/jug_01_arm_1k.exr@
+        custom asset inputs:texture_basecolor = @./textures/jug_01_diff_1k.exr@
+        custom asset inputs:texture_normal = @./textures/jug_01_nor_gl_1k.exr@
+    }
+}
+

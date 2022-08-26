@@ -1,0 +1,26 @@
+#usda 1.0
+(
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+)
+
+def "jug_01" (
+    prepend apiSchemas = ["MaterialBindingAPI"]
+    assetInfo = {
+        string name = "jug_01"
+        string version = "1.0"
+    }
+    kind = "component"
+    prepend references = @./jug_01.geo.usdc@
+)
+{
+    rel material:binding = </jug_01/looks/jug_01>
+
+    def "looks" (
+        prepend references = @./jug_01.look.usda@
+    )
+    {
+    }
+}
+
