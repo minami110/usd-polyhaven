@@ -1,0 +1,17 @@
+#usda 1.0
+(
+    defaultPrim = "looks"
+)
+
+def Scope "looks"
+{
+    def "antique_ceramic_vase_01" (
+        references = @../polyheaven_base_look.usda@</base>
+    )
+    {
+        # Custom values
+        custom asset inputs:texture_basecolor = @./textures/antique_ceramic_vase_01_diff_1k.exr@
+        custom asset inputs:texture_arm = @./textures/antique_ceramic_vase_01_arm_1k.exr@
+        custom asset inputs:texture_normal = @./textures/antique_ceramic_vase_01_nor_gl_1k.exr@
+    }
+}
