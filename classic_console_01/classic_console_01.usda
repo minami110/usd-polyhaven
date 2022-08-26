@@ -1,0 +1,25 @@
+#usda 1.0
+(
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+    upAxis = "Y"
+)
+
+def "classic_console_01" (
+    prepend apiSchemas = ["MaterialBindingAPI"]
+    prepend references = @./classic_console_01.geo.usdc@
+)
+{
+    rel material:binding = </classic_console_01/looks/classic_console_01>
+
+    def Scope "looks"
+    {
+        def "classic_console_01" (
+            prepend references = @./classic_console_01.look.usda@
+        )
+        {
+        }
+    }
+}
+

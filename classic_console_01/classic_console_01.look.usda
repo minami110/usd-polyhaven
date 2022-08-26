@@ -1,0 +1,14 @@
+#usda 1.0
+(
+    defaultPrim = "classic_console_01"
+)
+
+def "classic_console_01" (
+    references = @../polyheaven_base_look.usda@</base>
+)
+{
+    # Custom values
+    custom asset inputs:texture_basecolor = @./textures/ClassicConsole_01_diff_1k.exr@
+    custom asset inputs:texture_arm = @./textures/ClassicConsole_01_arm_1k.exr@
+    custom asset inputs:texture_normal = @./textures/ClassicConsole_01_nor_gl_1k.exr@
+}
