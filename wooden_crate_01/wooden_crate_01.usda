@@ -1,0 +1,21 @@
+#usda 1.0
+(
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+    upAxis = "Y"
+)
+
+def "wooden_crate_01" (
+    prepend apiSchemas = ["MaterialBindingAPI"]
+    prepend references = @./wooden_crate_01.geo.usdc@
+)
+{
+    rel material:binding = </wooden_crate_01/looks/wooden_crate_01>
+
+    def "looks" (
+        prepend references = @./wooden_crate_01.look.usda@
+    )
+    {
+    }
+}
