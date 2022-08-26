@@ -1,0 +1,26 @@
+#usda 1.0
+(
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+)
+
+def "wooden_bucket_02" (
+    prepend apiSchemas = ["MaterialBindingAPI"]
+    assetInfo = {
+        string name = "wooden_bucket_02"
+        string version = "1.0"
+    }
+    kind = "component"
+    prepend references = @./wooden_bucket_02.geo.usdc@
+)
+{
+    rel material:binding = </wooden_bucket_02/looks/wooden_bucket_02>
+
+    def "looks" (
+        prepend references = @./wooden_bucket_02.look.usda@
+    )
+    {
+    }
+}
+
