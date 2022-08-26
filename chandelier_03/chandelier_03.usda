@@ -1,0 +1,40 @@
+#usda 1.0
+(
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+    upAxis = "Y"
+)
+
+def "chandelier_03" (
+    prepend references = @./chandelier_03.geo.usdc@
+)
+{
+    def "looks" (
+        prepend references = @./chandelier_03.look.usda@
+    )
+    {
+    }
+
+    over "body"
+    {
+        uniform token subsetFamily:materialBind:familyType = "nonOverlapping"
+
+        over "material_body" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            uniform token familyName = "materialBind"
+            rel material:binding = </chandelier_03/looks/body>
+        }
+
+        over "material_glass" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            uniform token familyName = "materialBind"
+            rel material:binding = </chandelier_03/looks/glass>
+        }
+    }
+}
+
