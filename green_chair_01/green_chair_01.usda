@@ -1,0 +1,26 @@
+#usda 1.0
+(
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+)
+
+def "green_chair_01" (
+    prepend apiSchemas = ["MaterialBindingAPI"]
+    assetInfo = {
+        string name = "green_chair_01"
+        string version = "1.0"
+    }
+    kind = "component"
+    prepend references = @./green_chair_01.geo.usdc@
+)
+{
+    rel material:binding = </green_chair_01/looks/green_chair_01>
+
+    def "looks" (
+        prepend references = @./green_chair_01.look.usda@
+    )
+    {
+    }
+}
+
