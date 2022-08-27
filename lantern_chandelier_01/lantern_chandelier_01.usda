@@ -1,0 +1,52 @@
+#usda 1.0
+(
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+)
+
+def "lantern_chandelier_01" (
+    assetInfo = {
+        string name = "lantern_chandelier_01"
+        string version = "1.0"
+    }
+    kind = "component"
+    prepend references = @./lantern_chandelier_01.geo.usdc@
+)
+{
+    def "looks" (
+        prepend references = @./lantern_chandelier_01.look.usda@
+    )
+    {
+    }
+
+    over "mesh"
+    {
+        uniform token subsetFamily:materialBind:familyType = "nonOverlapping"
+
+        over "material_body" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            uniform token familyName = "materialBind"
+            rel material:binding = </lantern_chandelier_01/looks/body>
+        }
+
+        over "material_glass" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            uniform token familyName = "materialBind"
+            rel material:binding = </lantern_chandelier_01/looks/glass>
+        }
+
+        over "material_lamp" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            uniform token familyName = "materialBind"
+            rel material:binding = </lantern_chandelier_01/looks/lamp>
+        }
+    }
+}
+
