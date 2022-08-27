@@ -12,7 +12,10 @@ def "green_chair_01" (
         string version = "1.0"
     }
     kind = "component"
-    prepend references = @./green_chair_01.geo.usdc@
+    prepend references = [
+        @./green_chair_01.geo.proxy.usdc@,
+        @./green_chair_01.geo.usdc@
+    ]
 )
 {
     rel material:binding = </green_chair_01/looks/green_chair_01>
@@ -21,6 +24,17 @@ def "green_chair_01" (
         prepend references = @./green_chair_01.look.usda@
     )
     {
+    }
+
+    over "proxy"
+    {
+        uniform token purpose = "proxy"
+    }
+
+    over "mesh"
+    {
+        rel proxyPrim = </green_chair_01/proxy>
+        uniform token purpose = "render"
     }
 }
 

@@ -9,6 +9,7 @@ def Scope "looks"
         prepend references = @../polyheaven_base_look.usda@</base>
     )
     {
+        custom float inputs:ao_intensity = 1
         custom asset inputs:texture_arm = @./textures/GreenChair_01_arm_1k.exr@
         custom asset inputs:texture_basecolor = @./textures/GreenChair_01_diff_1k.exr@
         custom asset inputs:texture_normal = @./textures/GreenChair_01_nor_gl_1k.exr@
