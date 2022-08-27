@@ -1,0 +1,40 @@
+#usda 1.0
+(
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+)
+
+def "carved_wooden_elephant" (
+    prepend apiSchemas = ["MaterialBindingAPI"]
+    assetInfo = {
+        string name = "carved_wooden_elephant"
+        string version = "1.0"
+    }
+    kind = "component"
+    prepend references = [
+        @./carved_wooden_elephant.geo.proxy.usdc@,
+        @./carved_wooden_elephant.geo.usdc@
+    ]
+)
+{
+    rel material:binding = </carved_wooden_elephant/looks/carved_wooden_elephant>
+
+    def "looks" (
+        prepend references = @./carved_wooden_elephant.look.usda@
+    )
+    {
+    }
+
+    over "proxy"
+    {
+        uniform token purpose = "proxy"
+    }
+
+    over "mesh"
+    {
+        rel proxyPrim = </carved_wooden_elephant/proxy>
+        uniform token purpose = "render"
+    }
+}
+

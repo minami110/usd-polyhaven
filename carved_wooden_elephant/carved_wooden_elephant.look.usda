@@ -1,0 +1,21 @@
+#usda 1.0
+(
+    defaultPrim = "looks"
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+)
+
+def Scope "looks"
+{
+    def "carved_wooden_elephant" (
+        prepend references = @../polyheaven_base_look.usda@</base>
+    )
+    {
+        custom float inputs:ao_intensity = 1
+        custom asset inputs:texture_arm = @./textures/carved_wooden_elephant_arm_1k.exr@
+        custom asset inputs:texture_basecolor = @./textures/carved_wooden_elephant_diff_1k.exr@
+        custom asset inputs:texture_normal = @./textures/carved_wooden_elephant_nor_gl_1k.exr@
+    }
+}
+
