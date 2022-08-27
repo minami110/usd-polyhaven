@@ -3,22 +3,60 @@
     framesPerSecond = 24
     metersPerUnit = 1
     timeCodesPerSecond = 24
-    upAxis = "Y"
 )
 
 def "sofa_03" (
-    prepend apiSchemas = ["MaterialBindingAPI"]
-    prepend references = @./sofa_03.geo.usdc@
+    assetInfo = {
+        string name = "sofa_03"
+        string version = "1.0"
+    }
+    kind = "component"
+    prepend references = [
+        @./sofa_03.geo.proxy.usdc@,
+        @./sofa_03.geo.usdc@
+    ]
 )
 {
-    rel material:binding = </sofa_03/looks/sofa_03>
-
-    def Scope "looks"
+    def "looks" (
+        prepend references = @./sofa_03.look.usda@
+    )
     {
-        def "sofa_03" (
-            prepend references = @./sofa_03.look.usda@
+    }
+
+    over "mesh"
+    {
+        rel proxyPrim = </sofa_03/proxy>
+        uniform token purpose = "render"
+        uniform token subsetFamily:materialBind:familyType = "nonOverlapping"
+
+        over "material_body" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
         )
         {
+            uniform token familyName = "materialBind"
+            rel material:binding = </sofa_03/looks/body>
+        }
+
+        over "material_fringe" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            uniform token familyName = "materialBind"
+            rel material:binding = </sofa_03/looks/fringe>
+        }
+    }
+
+    over "proxy"
+    {
+        uniform token purpose = "proxy"
+        uniform token subsetFamily:materialBind:familyType = "nonOverlapping"
+
+        over "material_body" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            uniform token familyName = "materialBind"
+            rel material:binding = </sofa_03/looks/body>
         }
     }
 }

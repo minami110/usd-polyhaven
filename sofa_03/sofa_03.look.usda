@@ -1,14 +1,34 @@
 #usda 1.0
 (
-    defaultPrim = "sofa_03"
+    defaultPrim = "looks"
 )
 
-def "sofa_03" (
-    references = @../polyheaven_base_look_opacity.usda@</base>
-)
+def Scope "looks"
 {
-    custom asset inputs:texture_basecolor = @./textures/sofa_03_diff_2k.exr@
-    custom asset inputs:texture_arm = @./textures/sofa_03_arm_2k.exr@
-    custom asset inputs:texture_normal = @./textures/sofa_03_nor_gl_2k.exr@
-    custom asset inputs:texture_opacity = @./textures/sofa_03_opacity_2k.exr@
+    def "body" (
+        prepend references = @../polyheaven_base_look.usda@</base>
+    )
+    {
+        custom float inputs:ao_intensity = 0
+        custom asset inputs:texture_arm = @./textures/sofa_03_arm_2k.exr@
+        custom asset inputs:texture_basecolor = @./textures/sofa_03_diff_2k.exr@
+        custom asset inputs:texture_normal = @./textures/sofa_03_nor_gl_2k.exr@
+    }
+
+    def "fringe" (
+        prepend inherits = </looks/body>
+    )
+    {
+        over "mtlxStandardSurface"
+        {
+            color3f inputs:opacity.connect = </looks/fringe/mtlximage1.outputs:out>
+        }
+
+        def Shader "mtlximage1"
+        {
+            uniform token info:id = "ND_image_float"
+            asset inputs:file = @./textures/sofa_03_opacity_2k.exr@
+            float outputs:out
+        }
+    }
 }
