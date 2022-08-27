@@ -1,0 +1,54 @@
+#usda 1.0
+(
+    defaultPrim = "looks"
+)
+
+def Scope "looks"
+{
+    def "base" (
+        prepend references = @../polyheaven_base_look.usda@</base>
+    )
+    {
+        custom float inputs:ao_intensity = 0.3
+        custom asset inputs:texture_arm = @./textures/horse_statue_01_arm_1k.exr@
+        custom asset inputs:texture_basecolor = @./textures/horse_statue_01_diff_1k.exr@
+        custom asset inputs:texture_normal = @./textures/horse_statue_01_nor_gl_1k.exr@
+    }
+
+    def Material "marble"
+    {
+        token outputs:mtlx:surface.connect = </looks/marble/marble.outputs:out>
+
+        def Shader "marble"
+        {
+            uniform token info:id = "ND_standard_surface_surfaceshader"
+            float inputs:specular_roughness.connect = </looks/marble/mtlxseparate3c1.outputs:outg>
+            float inputs:subsurface = 1
+            color3f inputs:subsurface_color.connect = </looks/marble/mtlximagearm1.outputs:out>
+            color3f inputs:subsurface_radius = (0.0014, 0.001, 0.001)
+            token outputs:out
+        }
+
+        def Shader "mtlxseparate3c1"
+        {
+            uniform token info:id = "ND_separate3_color3"
+            color3f inputs:in.connect = </looks/marble/mtlximagearm.outputs:out>
+            float outputs:outg
+        }
+
+        def Shader "mtlximagearm"
+        {
+            uniform token info:id = "ND_image_color3"
+            asset inputs:file = @./textures/horse_statue_01_arm_1k.exr@
+            color3f outputs:out
+        }
+
+        def Shader "mtlximagearm1"
+        {
+            uniform token info:id = "ND_image_color3"
+            asset inputs:file = @./textures/horse_statue_01_diff_1k.exr@
+            color3f outputs:out
+        }
+    }
+}
+

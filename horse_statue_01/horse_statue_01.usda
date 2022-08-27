@@ -1,0 +1,44 @@
+#usda 1.0
+(
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+)
+
+def "horse_statue_01" (
+    assetInfo = {
+        string name = "horse_statue_01"
+        string version = "1.0"
+    }
+    kind = "component"
+    prepend references = @./horse_statue_01.geo.usdc@
+)
+{
+    def "looks" (
+        prepend references = @./horse_statue_01.look.usda@
+    )
+    {
+    }
+
+    over "mesh"
+    {
+        uniform token subsetFamily:materialBind:familyType = "nonOverlapping"
+
+        over "material_base" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            uniform token familyName = "materialBind"
+            rel material:binding = </horse_statue_01/looks/base>
+        }
+
+        over "material_marble" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            uniform token familyName = "materialBind"
+            rel material:binding = </horse_statue_01/looks/marble>
+        }
+    }
+}
+
