@@ -3,12 +3,19 @@
     framesPerSecond = 24
     metersPerUnit = 1
     timeCodesPerSecond = 24
-    upAxis = "Y"
 )
 
 def "gothic_cabinet_01" (
     prepend apiSchemas = ["MaterialBindingAPI"]
-    prepend references = @./gothic_cabinet_01.geo.usdc@
+    assetInfo = {
+        string name = "gothic_cabinet_01"
+        string version = "1.0"
+    }
+    kind = "component"
+    prepend references = [
+        @./gothic_cabinet_01.geo.proxy.usdc@,
+        @./gothic_cabinet_01.geo.usdc@
+    ]
 )
 {
     rel material:binding = </gothic_cabinet_01/looks/gothic_cabinet_01>
@@ -17,6 +24,61 @@ def "gothic_cabinet_01" (
         prepend references = @./gothic_cabinet_01.look.usda@
     )
     {
+    }
+
+    over "proxy_cabinet"
+    {
+        uniform token purpose = "proxy"
+    }
+
+    over "proxy_door1"
+    {
+        uniform token purpose = "proxy"
+    }
+
+    over "proxy_door2"
+    {
+        uniform token purpose = "proxy"
+    }
+
+    over "proxy_door3"
+    {
+        uniform token purpose = "proxy"
+    }
+
+    over "proxy_door4"
+    {
+        uniform token purpose = "proxy"
+    }
+
+    over "cabinet"
+    {
+        rel proxyPrim = </gothic_cabinet_01/proxy_cabinet>
+        uniform token purpose = "render"
+    }
+
+    over "door1"
+    {
+        rel proxyPrim = </gothic_cabinet_01/proxy_door1>
+        uniform token purpose = "render"
+    }
+
+    over "door2"
+    {
+        rel proxyPrim = </gothic_cabinet_01/proxy_door2>
+        uniform token purpose = "render"
+    }
+
+    over "door3"
+    {
+        rel proxyPrim = </gothic_cabinet_01/proxy_door3>
+        uniform token purpose = "render"
+    }
+
+    over "door4"
+    {
+        rel proxyPrim = </gothic_cabinet_01/proxy_door4>
+        uniform token purpose = "render"
     }
 }
 
