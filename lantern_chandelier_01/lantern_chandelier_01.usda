@@ -11,7 +11,10 @@ def "lantern_chandelier_01" (
         string version = "1.0"
     }
     kind = "component"
-    prepend references = @./lantern_chandelier_01.geo.usdc@
+    prepend references = [
+        @./lantern_chandelier_01.geo.proxy.usdc@,
+        @./lantern_chandelier_01.geo.usdc@
+    ]
 )
 {
     def "looks" (
@@ -22,6 +25,38 @@ def "lantern_chandelier_01" (
 
     over "mesh"
     {
+        rel proxyPrim = </lantern_chandelier_01/proxy>
+        uniform token purpose = "render"
+        uniform token subsetFamily:materialBind:familyType = "nonOverlapping"
+
+        over "material_body" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            uniform token familyName = "materialBind"
+            rel material:binding = </lantern_chandelier_01/looks/body>
+        }
+
+        over "material_glass" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            uniform token familyName = "materialBind"
+            rel material:binding = </lantern_chandelier_01/looks/glass>
+        }
+
+        over "material_lamp" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            uniform token familyName = "materialBind"
+            rel material:binding = </lantern_chandelier_01/looks/lamp>
+        }
+    }
+
+    over "proxy"
+    {
+        uniform token purpose = "proxy"
         uniform token subsetFamily:materialBind:familyType = "nonOverlapping"
 
         over "material_body" (
