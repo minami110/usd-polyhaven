@@ -1,0 +1,40 @@
+#usda 1.0
+(
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+)
+
+def "gothic_bed_01" (
+    prepend apiSchemas = ["MaterialBindingAPI"]
+    assetInfo = {
+        string name = "gothic_bed_01"
+        string version = "1.0"
+    }
+    kind = "component"
+    prepend references = [
+        @./gothic_bed_01.geo.proxy.usdc@,
+        @./gothic_bed_01.geo.usdc@
+    ]
+)
+{
+    rel material:binding = </gothic_bed_01/looks/gothic_bed_01>
+
+    def "looks" (
+        prepend references = @./gothic_bed_01.look.usda@
+    )
+    {
+    }
+
+    over "proxy"
+    {
+        uniform token purpose = "proxy"
+    }
+
+    over "mesh"
+    {
+        rel proxyPrim = </gothic_bed_01/proxy>
+        uniform token purpose = "render"
+    }
+}
+
