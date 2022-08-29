@@ -68,8 +68,11 @@ def "lantern_chandelier_01" (
         }
     }
 
-    over "light"
+    over "light" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
     {
+        rel material:binding = </lantern_chandelier_01/looks/lamp>
         float primvars:emission = 1
         float primvars:karma:object:lightsource_diffusescale = 1 (
             interpolation = "constant"
@@ -86,29 +89,14 @@ def "lantern_chandelier_01" (
         float primvars:temperature = 4000
         rel proxyPrim = </lantern_chandelier_01/proxy_light>
         uniform token purpose = "render"
-        uniform token subsetFamily:materialBind:familyType = "nonOverlapping"
-
-        over "material_lamp" (
-            prepend apiSchemas = ["MaterialBindingAPI"]
-        )
-        {
-            uniform token familyName = "materialBind"
-            rel material:binding = </lantern_chandelier_01/looks/lamp>
-        }
     }
 
-    over "proxy_light"
+    over "proxy_light" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
     {
+        rel material:binding = </lantern_chandelier_01/looks/lamp>
         uniform token purpose = "proxy"
-        uniform token subsetFamily:materialBind:familyType = "nonOverlapping"
-
-        over "material_lamp" (
-            prepend apiSchemas = ["MaterialBindingAPI"]
-        )
-        {
-            uniform token familyName = "materialBind"
-            rel material:binding = </lantern_chandelier_01/looks/lamp>
-        }
     }
 }
 
