@@ -3,11 +3,18 @@
     framesPerSecond = 24
     metersPerUnit = 1
     timeCodesPerSecond = 24
-    upAxis = "Y"
 )
 
-def "lantern_01" (
-    prepend references = @./lantern_01.geo.usdc@
+def Xform "lantern_01" (
+    assetInfo = {
+        string name = "lantern_01"
+        string version = "1.0"
+    }
+    kind = "component"
+    prepend references = [
+        @./lantern_01.geo.proxy.usdc@,
+        @./lantern_01.geo.usdc@
+    ]
 )
 {
     def "looks" (
@@ -21,6 +28,16 @@ def "lantern_01" (
     )
     {
         rel material:binding = </lantern_01/looks/body>
+        rel proxyPrim = </lantern_01/proxy_body>
+        uniform token purpose = "render"
+    }
+
+    over "proxy_body" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </lantern_01/looks/body>
+        uniform token purpose = "proxy"
     }
 
     over "glass" (
@@ -28,5 +45,36 @@ def "lantern_01" (
     )
     {
         rel material:binding = </lantern_01/looks/glass>
+        rel proxyPrim = </lantern_01/proxy_glass>
+        uniform token purpose = "render"
+    }
+
+    over "proxy_glass" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </lantern_01/looks/glass>
+        uniform token purpose = "proxy"
+    }
+
+    def SphereLight "pointlight" (
+        prepend apiSchemas = ["HoudiniViewportGuideAPI"]
+    )
+    {
+        float houdini:guidescale = 1
+        bool houdini:inviewermenu = 1
+        color3f inputs:color = (1, 1, 1)
+        float inputs:colorTemperature = 1850
+        float inputs:diffuse = 1
+        bool inputs:enableColorTemperature = 1
+        float inputs:exposure = 0
+        float inputs:intensity = 1
+        bool inputs:normalize = 0
+        float inputs:specular = 1
+        rel light:filters = None
+        bool treatAsPoint = 1
+        matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0.09345243126153946, 0, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
     }
 }
+
