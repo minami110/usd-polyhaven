@@ -1,6 +1,7 @@
 #usda 1.0
 (
     defaultPrim = "looks"
+    timeCodesPerSecond = 24
 )
 
 def Scope "looks"
@@ -9,6 +10,7 @@ def Scope "looks"
         prepend references = @../polyheaven_base_look.usda@</base>
     )
     {
+        custom float inputs:ao_intensity = 0
         custom asset inputs:texture_arm = @./textures/lantern_chandelier_01_arm_1k.exr@
         custom asset inputs:texture_basecolor = @./textures/lantern_chandelier_01_diff_1k.exr@
         custom asset inputs:texture_normal = @./textures/lantern_chandelier_01_nor_gl_1k.exr@
@@ -18,29 +20,17 @@ def Scope "looks"
         prepend references = @../polyheaven_base_look_glass.usda@</base>
     )
     {
+        custom float inputs:ior = 1.52
         custom asset inputs:texture_arm = @./textures/lantern_chandelier_01_glass_arm_1k.exr@
         custom asset inputs:texture_normal = @./textures/lantern_chandelier_01_glass_nor_gl_1k.exr@
+        custom float inputs:transmission_dispersion = 64
         custom float inputs:usenormalmap = 1
     }
 
-    def Material "lamp"
+    def "lamp" (
+        prepend references = @../polyheaven_base_look.geolight.usda@</base>
+    )
     {
-        token outputs:mtlx:surface.connect = </looks/lamp/lamp.outputs:out>
-
-        def Shader "lamp"
-        {
-            uniform token info:id = "ND_surface_unlit"
-            float inputs:emission = 1
-            color3f inputs:emission_color.connect = </looks/lamp/mtlxblackbody.outputs:out>
-            token outputs:out
-        }
-
-        def Shader "mtlxblackbody"
-        {
-            uniform token info:id = "ND_blackbody"
-            float inputs:temperature = 4000
-            color3f outputs:out
-        }
     }
 }
 

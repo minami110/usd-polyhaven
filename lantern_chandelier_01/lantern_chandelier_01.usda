@@ -25,7 +25,7 @@ def "lantern_chandelier_01" (
 
     over "mesh"
     {
-        rel proxyPrim = </lantern_chandelier_01/proxy>
+        rel proxyPrim = </lantern_chandelier_01/proxy_mesh>
         uniform token purpose = "render"
         uniform token subsetFamily:materialBind:familyType = "nonOverlapping"
 
@@ -44,17 +44,9 @@ def "lantern_chandelier_01" (
             uniform token familyName = "materialBind"
             rel material:binding = </lantern_chandelier_01/looks/glass>
         }
-
-        over "material_lamp" (
-            prepend apiSchemas = ["MaterialBindingAPI"]
-        )
-        {
-            uniform token familyName = "materialBind"
-            rel material:binding = </lantern_chandelier_01/looks/lamp>
-        }
     }
 
-    over "proxy"
+    over "proxy_mesh"
     {
         uniform token purpose = "proxy"
         uniform token subsetFamily:materialBind:familyType = "nonOverlapping"
@@ -74,6 +66,41 @@ def "lantern_chandelier_01" (
             uniform token familyName = "materialBind"
             rel material:binding = </lantern_chandelier_01/looks/glass>
         }
+    }
+
+    over "light"
+    {
+        float primvars:emission = 1
+        float primvars:karma:object:lightsource_diffusescale = 1 (
+            interpolation = "constant"
+        )
+        float primvars:karma:object:lightsource_samplingquality = 1 (
+            interpolation = "constant"
+        )
+        float primvars:karma:object:lightsource_specularscale = 1 (
+            interpolation = "constant"
+        )
+        int primvars:karma:object:treat_as_lightsource = 1 (
+            interpolation = "constant"
+        )
+        float primvars:temperature = 4000
+        rel proxyPrim = </lantern_chandelier_01/proxy_light>
+        uniform token purpose = "render"
+        uniform token subsetFamily:materialBind:familyType = "nonOverlapping"
+
+        over "material_lamp" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            uniform token familyName = "materialBind"
+            rel material:binding = </lantern_chandelier_01/looks/lamp>
+        }
+    }
+
+    over "proxy_light"
+    {
+        uniform token purpose = "proxy"
+        uniform token subsetFamily:materialBind:familyType = "nonOverlapping"
 
         over "material_lamp" (
             prepend apiSchemas = ["MaterialBindingAPI"]
