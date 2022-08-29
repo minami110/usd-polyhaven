@@ -31,16 +31,32 @@ def Scope "looks"
         def Shader "light"
         {
             uniform token info:id = "ND_surface_unlit"
-            float inputs:emission = 1
+            float inputs:emission.connect = </looks/light/usdprimvarreader1.outputs:result>
             color3f inputs:emission_color.connect = </looks/light/mtlxblackbody1.outputs:out>
             token outputs:out
+        }
+
+        def Shader "usdprimvarreader1"
+        {
+            uniform token info:id = "UsdPrimvarReader_float"
+            float inputs:fallback = 1
+            string inputs:varname = "emission"
+            float outputs:result
         }
 
         def Shader "mtlxblackbody1"
         {
             uniform token info:id = "ND_blackbody"
-            float inputs:temperature = 3500
+            float inputs:temperature.connect = </looks/light/usdprimvarreader2.outputs:result>
             color3f outputs:out
+        }
+
+        def Shader "usdprimvarreader2"
+        {
+            uniform token info:id = "UsdPrimvarReader_float"
+            float inputs:fallback = 5000
+            string inputs:varname = "temperature"
+            float outputs:result
         }
     }
 }
