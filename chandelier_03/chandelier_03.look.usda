@@ -23,5 +23,25 @@ def Scope "looks"
         custom asset inputs:texture_normal = @./textures/Chandelier_03_nor_gl_1k.exr@
         custom float inputs:usenormalmap = 1
     }
+
+    def Material "light"
+    {
+        token outputs:mtlx:surface.connect = </looks/light/light.outputs:out>
+
+        def Shader "light"
+        {
+            uniform token info:id = "ND_surface_unlit"
+            float inputs:emission = 1
+            color3f inputs:emission_color.connect = </looks/light/mtlxblackbody1.outputs:out>
+            token outputs:out
+        }
+
+        def Shader "mtlxblackbody1"
+        {
+            uniform token info:id = "ND_blackbody"
+            float inputs:temperature = 3500
+            color3f outputs:out
+        }
+    }
 }
 

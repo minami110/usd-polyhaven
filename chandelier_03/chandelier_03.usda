@@ -3,38 +3,88 @@
     framesPerSecond = 24
     metersPerUnit = 1
     timeCodesPerSecond = 24
-    upAxis = "Y"
 )
 
 def "chandelier_03" (
-    prepend references = @./chandelier_03.geo.usdc@
+    assetInfo = {
+        string name = "chandelier_03"
+        string version = "1.0"
+    }
+    kind = "component"
+    prepend references = [
+        @./chandelier_03.geo.proxy.usdc@,
+        @./chandelier_03.geo.usdc@
+    ]
 )
 {
+    float primvars:karma:object:lightsource_diffusescale = 1 (
+        interpolation = "constant"
+    )
+    float primvars:karma:object:lightsource_samplingquality = 1 (
+        interpolation = "constant"
+    )
+    float primvars:karma:object:lightsource_specularscale = 1 (
+        interpolation = "constant"
+    )
+    int primvars:karma:object:treat_as_lightsource = 1 (
+        interpolation = "constant"
+    )
+
     def "looks" (
         prepend references = @./chandelier_03.look.usda@
     )
     {
     }
 
-    over "body"
+    over "body" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
     {
-        uniform token subsetFamily:materialBind:familyType = "nonOverlapping"
+        rel material:binding = </chandelier_03/looks/body>
+        rel proxyPrim = </chandelier_03/proxy_body>
+        uniform token purpose = "render"
+    }
 
-        over "material_body" (
-            prepend apiSchemas = ["MaterialBindingAPI"]
-        )
-        {
-            uniform token familyName = "materialBind"
-            rel material:binding = </chandelier_03/looks/body>
-        }
+    over "proxy_body" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </chandelier_03/looks/body>
+        uniform token purpose = "proxy"
+    }
 
-        over "material_glass" (
-            prepend apiSchemas = ["MaterialBindingAPI"]
-        )
-        {
-            uniform token familyName = "materialBind"
-            rel material:binding = </chandelier_03/looks/glass>
-        }
+    over "glass" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </chandelier_03/looks/glass>
+        rel proxyPrim = </chandelier_03/proxy_glass>
+        uniform token purpose = "render"
+    }
+
+    over "proxy_glass" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </chandelier_03/looks/glass>
+        uniform token purpose = "proxy"
+    }
+
+    over "light" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </chandelier_03/looks/light>
+        rel proxyPrim = </chandelier_03/proxy_light>
+        uniform token purpose = "render"
+    }
+
+    over "proxy_light" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </chandelier_03/looks/light>
+        uniform token purpose = "proxy"
     }
 }
 
