@@ -17,19 +17,6 @@ def "chandelier_03" (
     ]
 )
 {
-    float primvars:karma:object:lightsource_diffusescale = 1 (
-        interpolation = "constant"
-    )
-    float primvars:karma:object:lightsource_samplingquality = 1 (
-        interpolation = "constant"
-    )
-    float primvars:karma:object:lightsource_specularscale = 1 (
-        interpolation = "constant"
-    )
-    int primvars:karma:object:treat_as_lightsource = 1 (
-        interpolation = "constant"
-    )
-
     def "looks" (
         prepend references = @./chandelier_03.look.usda@
     )
@@ -75,6 +62,20 @@ def "chandelier_03" (
     )
     {
         rel material:binding = </chandelier_03/looks/light>
+        float primvars:emission = 1
+        float primvars:karma:object:lightsource_diffusescale = 1 (
+            interpolation = "constant"
+        )
+        float primvars:karma:object:lightsource_samplingquality = 1 (
+            interpolation = "constant"
+        )
+        float primvars:karma:object:lightsource_specularscale = 1 (
+            interpolation = "constant"
+        )
+        int primvars:karma:object:treat_as_lightsource = 1 (
+            interpolation = "constant"
+        )
+        float primvars:temperature = 3500
         rel proxyPrim = </chandelier_03/proxy_light>
         uniform token purpose = "render"
     }
@@ -87,4 +88,3 @@ def "chandelier_03" (
         uniform token purpose = "proxy"
     }
 }
-
