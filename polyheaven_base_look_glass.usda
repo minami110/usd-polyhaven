@@ -235,6 +235,7 @@ def Material "base" (
             float inputs:refl_ior.connect = </base/redshift.inputs:ior>
             float inputs:refl_roughness.connect = </base/redshift/rs_sep_arm.outputs:outG>
             float inputs:refr_abbe.connect = </base/redshift.inputs:transmission_dispersion>
+            float inputs:refr_weight = 1
             token outputs:outColor
         }
 
