@@ -1,71 +1,272 @@
 #usda 1.0
+(
+    "ENTER YOUR COMMENT"
+    defaultPrim = "base"
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+)
 
-class Material "base"
+def Material "base" (
+    assetInfo = {
+        asset identifier = @ENTER ASSET IDENTIFIER@
+        string name = "ENTER ASSET NAME"
+        string version = "1.0"
+    }
+)
 {
-    token outputs:mtlx:surface.connect = </base/mtlxStandardSurface.outputs:out>
+    float inputs:ior = 1.52
+    float inputs:normal_scale = 1
+    asset inputs:texture_arm = @@
+    asset inputs:texture_normal = @@
+    float inputs:transmission_dispersion = 64
+    token outputs:mtlx:surface.connect = </base/materialx.outputs:out>
+    token outputs:Redshift:surface.connect = </base/redshift.outputs:Shader>
+    token outputs:surface.connect = </base/usd.outputs:surface>
 
-    # Custom values
-    custom asset inputs:texture_arm = @@
-    custom asset inputs:texture_normal = @@
-    custom float inputs:ior = 1.52
-    custom float inputs:transmission_dispersion = 64
-    custom float inputs:usenormalmap = 0
-
-    # Material X
-    def Shader "mtlxStandardSurface"
+    def NodeGraph "usd"
     {
-        uniform token info:id = "ND_standard_surface_surfaceshader"
-        vector3f inputs:normal.connect = </base/mtlxnormalmap1.outputs:out>
-        float inputs:specular_roughness.connect = </base/mtlxseparate3c1.outputs:outg>
-        float inputs:specular_IOR.connect = </base.inputs:ior>
-        float inputs:transmission = 1
+        token outputs:surface.connect = </base/usd/usd_previewsurface.outputs:surface>
+
+        def Shader "usd_previewsurface"
+        {
+            uniform token info:id = "UsdPreviewSurface"
+            normal3f inputs:normal.connect = </base/usd/usd_image_normal.outputs:rgb>
+            float inputs:opacity = 0.1
+            float inputs:roughness.connect = </base/usd/usd_image_arm.outputs:g>
+            token outputs:surface
+        }
+
+        def Shader "usd_image_arm"
+        {
+            uniform token info:id = "UsdUVTexture"
+            float4 inputs:fallback = (1, 0.2, 0, 1)
+            asset inputs:file.connect = </base.inputs:texture_arm>
+            float2 inputs:st.connect = </base/usd/usd_primvar_st.outputs:result>
+            float outputs:g
+        }
+
+        def Shader "usd_primvar_st"
+        {
+            uniform token info:id = "UsdPrimvarReader_float2"
+            string inputs:varname = "st"
+            float2 outputs:result
+        }
+
+        def Shader "usd_image_normal"
+        {
+            uniform token info:id = "UsdUVTexture"
+            float4 inputs:fallback = (0.5, 0.5, 1, 1)
+            asset inputs:file.connect = </base.inputs:texture_normal>
+            float2 inputs:st.connect = </base/usd/usd_primvar_st.outputs:result>
+            vector3f outputs:rgb
+        }
+    }
+
+    def NodeGraph "materialx"
+    {
+        float inputs:ior = 1.52
+        float inputs:ior.connect = </base.inputs:ior>
+        float inputs:normal_scale = 1
+        float inputs:normal_scale.connect = </base.inputs:normal_scale>
+        float inputs:transmission_dispersion = 64
         float inputs:transmission_dispersion.connect = </base.inputs:transmission_dispersion>
-        token outputs:out
+        token outputs:out.connect = </base/materialx/mtlx_standard_surface.outputs:out>
+
+        def Shader "mtlx_standard_surface"
+        {
+            uniform token info:id = "ND_standard_surface_surfaceshader"
+            float inputs:base (
+                customData = {
+                    dictionary HoudiniPreviewTags = {
+                        double default_value = 1
+                        string ogl_diff_intensity = "1"
+                    }
+                }
+            )
+            color3f inputs:base_color (
+                customData = {
+                    dictionary HoudiniPreviewTags = {
+                        double3 default_value = (0.8, 0.8, 0.8)
+                        string ogl_diff = "1"
+                    }
+                }
+            )
+            float inputs:coat (
+                customData = {
+                    dictionary HoudiniPreviewTags = {
+                        double default_value = 0
+                        string ogl_coat_intensity = "1"
+                    }
+                }
+            )
+            float inputs:coat_roughness (
+                customData = {
+                    dictionary HoudiniPreviewTags = {
+                        double default_value = 0.1
+                        string ogl_coat_rough = "1"
+                    }
+                }
+            )
+            float inputs:emission (
+                customData = {
+                    dictionary HoudiniPreviewTags = {
+                        double default_value = 0
+                        string ogl_emit_intensity = "1"
+                    }
+                }
+            )
+            color3f inputs:emission_color (
+                customData = {
+                    dictionary HoudiniPreviewTags = {
+                        double3 default_value = (1, 1, 1)
+                        string ogl_emit = "1"
+                    }
+                }
+            )
+            float inputs:metalness (
+                customData = {
+                    dictionary HoudiniPreviewTags = {
+                        double default_value = 0
+                        string ogl_metallic = "1"
+                    }
+                }
+            )
+            vector3f inputs:normal.connect = </base/materialx/mtlx_normalmap.outputs:out>
+            float inputs:specular (
+                customData = {
+                    dictionary HoudiniPreviewTags = {
+                        double default_value = 1
+                        string ogl_spec_intensity = "1"
+                    }
+                }
+            )
+            color3f inputs:specular_color (
+                customData = {
+                    dictionary HoudiniPreviewTags = {
+                        double3 default_value = (1, 1, 1)
+                        string ogl_spec = "1"
+                    }
+                }
+            )
+            float inputs:specular_IOR (
+                customData = {
+                    dictionary HoudiniPreviewTags = {
+                        double default_value = 1.5
+                        string ogl_ior = "1"
+                    }
+                }
+            )
+            float inputs:specular_IOR.connect = </base/materialx.inputs:ior>
+            float inputs:specular_roughness (
+                customData = {
+                    dictionary HoudiniPreviewTags = {
+                        double default_value = 0.2
+                        string ogl_rough = "1"
+                    }
+                }
+            )
+            float inputs:specular_roughness.connect = </base/materialx/mtlx_sep_arm.outputs:outg>
+            float inputs:transmission = 1 (
+                customData = {
+                    dictionary HoudiniPreviewTags = {
+                        double default_value = 0
+                        string ogl_transparency = "1"
+                    }
+                }
+            )
+            float inputs:transmission_dispersion.connect = </base/materialx.inputs:transmission_dispersion>
+            token outputs:out
+        }
+
+        def Shader "mtlx_sep_arm"
+        {
+            uniform token info:id = "ND_separate3_color3"
+            color3f inputs:in.connect = </base/materialx/mtlx_image_arm.outputs:out>
+            float outputs:outg
+        }
+
+        def Shader "mtlx_image_arm"
+        {
+            uniform token info:id = "ND_image_color3"
+            color3f inputs:default = (1, 0.2, 0)
+            asset inputs:file.connect = </base.inputs:texture_arm>
+            color3f outputs:out
+        }
+
+        def Shader "mtlx_normalmap"
+        {
+            uniform token info:id = "ND_normalmap"
+            vector3f inputs:in.connect = </base/materialx/mtlx_image_normal.outputs:out>
+            float inputs:scale.connect = </base/materialx.inputs:normal_scale>
+            vector3f outputs:out
+        }
+
+        def Shader "mtlx_image_normal"
+        {
+            uniform token info:id = "ND_image_vector3"
+            vector3f inputs:default = (0.5, 0.5, 1)
+            asset inputs:file.connect = </base.inputs:texture_normal>
+            vector3f outputs:out
+        }
     }
 
-    def Shader "mtlxnormalmap1"
+    def NodeGraph "redshift"
     {
-        uniform token info:id = "ND_normalmap"
-        vector3f inputs:in.connect = </base/mtlxMixNormal.outputs:out>
-        vector3f outputs:out
-    }
+        float inputs:ior = 1.52
+        float inputs:ior.connect = </base.inputs:ior>
+        float inputs:normal_scale = 1
+        float inputs:normal_scale.connect = </base.inputs:normal_scale>
+        float inputs:transmission_dispersion = 64
+        float inputs:transmission_dispersion.connect = </base.inputs:transmission_dispersion>
+        token outputs:Shader.connect = </base/redshift/rs_usd_material.outputs:Shader>
 
-    def Shader "mtlxMixNormal"
-    {
-        uniform token info:id = "ND_mix_vector3"
-        vector3f inputs:fg.connect = </base/mtlx_normal.outputs:out>
-        vector3f inputs:bg = (0.5, 0.5, 1)
-        float inputs:mix.connect = </base/mtlxUseNormal.outputs:out>
-        vector3f outputs:out
-    }
+        def Shader "rs_usd_material"
+        {
+            uniform token info:id = "redshift_usd_material"
+            vector3f inputs:BumpMap.connect = </base/redshift/rs_normalmap1.outputs:out>
+            token inputs:Surface.connect = </base/redshift/rs_standard_material.outputs:outColor>
+            token outputs:Shader
+        }
 
-    def Shader "mtlxUseNormal"
-    {
-        uniform token info:id = "ND_constant_float"
-        float inputs:value.connect = </base.inputs:usenormalmap>
-        float outputs:out
-    }
+        def Shader "rs_standard_material"
+        {
+            uniform token info:id = "redshift::StandardMaterial"
+            float inputs:refl_ior.connect = </base/redshift.inputs:ior>
+            float inputs:refl_roughness.connect = </base/redshift/rs_sep_arm.outputs:outG>
+            float inputs:refr_abbe.connect = </base/redshift.inputs:transmission_dispersion>
+            token outputs:outColor
+        }
 
-    def Shader "mtlxseparate3c1"
-    {
-        uniform token info:id = "ND_separate3_color3"
-        color3f inputs:in.connect = </base/mtlx_arm.outputs:out>
-        float outputs:outr
-        float outputs:outb
-        float outputs:outg
-    }
+        def Shader "rs_sep_arm"
+        {
+            uniform token info:id = "redshift::RSColorSplitter"
+            color4f inputs:input.connect = </base/redshift/rs_image_arm.outputs:outColor>
+            float outputs:outG
+        }
 
-    def Shader "mtlx_arm"
-    {
-        uniform token info:id = "ND_image_color3"
-        asset inputs:file.connect = </base.inputs:texture_arm>
-        color3f outputs:out
-    }
+        def Shader "rs_image_arm"
+        {
+            uniform token info:id = "redshift::TextureSampler"
+            asset inputs:tex0.connect = </base.inputs:texture_arm>
+            color3f outputs:outColor
+        }
 
-    def Shader "mtlx_normal"
-    {
-        uniform token info:id = "ND_image_vector3"
-        asset inputs:file.connect = </base.inputs:texture_normal>
-        vector3f outputs:out
+        def Shader "rs_normalmap1"
+        {
+            uniform token info:id = "redshift::BumpMap"
+            color3f inputs:input.connect = </base/redshift/rs_image_normal.outputs:outColor>
+            token inputs:inputType = "1"
+            float inputs:scale.connect = </base/redshift.inputs:normal_scale>
+            vector3f outputs:out
+        }
+
+        def Shader "rs_image_normal"
+        {
+            uniform token info:id = "redshift::TextureSampler"
+            asset inputs:tex0.connect = </base.inputs:texture_normal>
+            color3f outputs:outColor
+        }
     }
 }
+
