@@ -3,3 +3,6 @@
 
 # Houdini backup files
 *bak*.hip
+
+# Solaris ignore usda
+DELETETHIS.usda
