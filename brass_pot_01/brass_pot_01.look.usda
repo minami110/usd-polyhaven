@@ -1,16 +1,20 @@
 #usda 1.0
 (
     defaultPrim = "looks"
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
 )
 
 def Scope "looks"
 {
     def "brass_pot_01" (
-        references = @../polyheaven_base_look.usda@</base>
+        prepend references = @../base_looks/lit.usda@</base>
     )
     {
-        custom asset inputs:texture_basecolor = @./textures/brass_pot_01_diff_1k.exr@
-        custom asset inputs:texture_arm = @./textures/brass_pot_01_arm_1k.exr@
-        custom asset inputs:texture_normal = @./textures/brass_pot_01_nor_gl_1k.exr@
+        asset inputs:texture_arm = @./textures/brass_pot_01_arm_1k.exr@
+        asset inputs:texture_basecolor = @./textures/brass_pot_01_diff_1k.exr@
+        asset inputs:texture_normal = @./textures/brass_pot_01_nor_gl_1k.exr@
     }
 }
+

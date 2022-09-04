@@ -3,26 +3,78 @@
     framesPerSecond = 24
     metersPerUnit = 1
     timeCodesPerSecond = 24
-    upAxis = "Y"
 )
 
 def "brass_pot_01" (
     prepend apiSchemas = ["MaterialBindingAPI"]
-    prepend references = @./brass_pot_01.geo.usdc@
+    assetInfo = {
+        asset identifier = @brass_pot_01@
+        string name = "brass_pot_01"
+        string version = "1.0"
+    }
+    kind = "component"
+    prepend references = [
+        @./brass_pot_01.geo.usdc@,
+        @./brass_pot_01.geo.proxy.usdc@
+    ]
+    variants = {
+        string model = "default"
+    }
+    prepend variantSets = "model"
 )
 {
     rel material:binding = </brass_pot_01/looks/brass_pot_01>
-
-    over "lid"
-    {
-        matrix4d xformOp:transform:transform1 = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0.20366784185171127, 0, 1) )
-        uniform token[] xformOpOrder = ["xformOp:transform:transform1"]
-    }
 
     def "looks" (
         prepend references = @./brass_pot_01.look.usda@
     )
     {
+    }
+
+    over "body"
+    {
+        rel proxyPrim = </brass_pot_01/body/proxy>
+        uniform token purpose = "render"
+
+        over "proxy"
+        {
+            uniform token purpose = "proxy"
+        }
+    }
+
+    over "lid"
+    {
+        rel proxyPrim = </brass_pot_01/lid/proxy>
+        uniform token purpose = "render"
+
+        over "proxy"
+        {
+            uniform token purpose = "proxy"
+        }
+    }
+    variantSet "model" = {
+        "bodyonly" {
+            over "lid"
+            {
+                token visibility = "invisible"
+            }
+
+        }
+        "default" {
+            over "lid"
+            {
+                matrix4d xformOp:transform:transform1 = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0.20425447821617126, 0, 1) )
+                uniform token[] xformOpOrder = ["xformOp:transform:transform1"]
+            }
+
+        }
+        "lidonly" {
+            over "body"
+            {
+                token visibility = "invisible"
+            }
+
+        }
     }
 }
 
