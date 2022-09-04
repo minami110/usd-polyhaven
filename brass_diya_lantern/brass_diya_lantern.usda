@@ -1,0 +1,118 @@
+#usda 1.0
+(
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+)
+
+def "brass_diya_lantern" (
+    assetInfo = {
+        asset identifier = @brass_diya_lantern@
+        string name = "brass_diya_lantern"
+        string version = "1.0"
+    }
+    kind = "component"
+    prepend references = [
+        @./brass_diya_lantern.geo.proxy.usdc@,
+        @./brass_diya_lantern.geo.usdc@
+    ]
+)
+{
+    def "looks" (
+        prepend references = @./brass_diya_lantern.look.usda@
+    )
+    {
+    }
+
+    over "body"
+    {
+        rel proxyPrim = </brass_diya_lantern/body_proxy>
+        uniform token purpose = "render"
+        uniform token subsetFamily:materialBind:familyType = "nonOverlapping"
+
+        over "material_body" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            uniform token familyName = "materialBind"
+            rel material:binding = </brass_diya_lantern/looks/body>
+        }
+
+        over "material_glass" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            uniform token familyName = "materialBind"
+            rel material:binding = </brass_diya_lantern/looks/glass>
+        }
+    }
+
+    over "body_proxy"
+    {
+        uniform token purpose = "proxy"
+        uniform token subsetFamily:materialBind:familyType = "nonOverlapping"
+
+        over "material_body" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            uniform token familyName = "materialBind"
+            rel material:binding = </brass_diya_lantern/looks/body>
+        }
+
+        over "material_glass" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            uniform token familyName = "materialBind"
+            rel material:binding = </brass_diya_lantern/looks/glass>
+        }
+    }
+
+    over "chain"
+    {
+        rel proxyPrim = </brass_diya_lantern/chain_proxy>
+        uniform token purpose = "render"
+        uniform token subsetFamily:materialBind:familyType = "nonOverlapping"
+
+        over "material_body" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            uniform token familyName = "materialBind"
+            rel material:binding = </brass_diya_lantern/looks/body>
+        }
+    }
+
+    over "chain_proxy"
+    {
+        uniform token purpose = "proxy"
+        uniform token subsetFamily:materialBind:familyType = "nonOverlapping"
+
+        over "material_body" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            uniform token familyName = "materialBind"
+            rel material:binding = </brass_diya_lantern/looks/body>
+        }
+    }
+
+    over "flame" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </brass_diya_lantern/looks/flame>
+        rel proxyPrim = </brass_diya_lantern/flame_proxy>
+        uniform token purpose = "render"
+    }
+
+    over "flame_proxy" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </brass_diya_lantern/looks/flame>
+        uniform token purpose = "proxy"
+    }
+}
+

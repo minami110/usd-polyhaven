@@ -1,0 +1,40 @@
+#usda 1.0
+(
+    defaultPrim = "looks"
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+)
+
+def Scope "looks"
+{
+    def "body" (
+        prepend references = @../base_looks/lit.usda@
+    )
+    {
+        asset inputs:texture_arm = @./textures/brass_diya_lantern_arm_1k.exr@
+        asset inputs:texture_basecolor = @./textures/brass_diya_lantern_diff_1k.exr@
+        asset inputs:texture_normal = @./textures/brass_diya_lantern_nor_gl_1k.exr@
+    }
+
+    def "glass" (
+        prepend references = @../base_looks/transmission.usda@</base>
+    )
+    {
+        float inputs:ior = 1.52
+        float inputs:normal_scale = 1
+        asset inputs:texture_arm = @./textures/brass_diya_lantern_arm_1k.exr@
+        asset inputs:texture_normal = @./textures/brass_diya_lantern_nor_gl_1k.exr@
+        float inputs:transmission_dispersion = 0
+    }
+
+    def "flame" (
+        prepend references = @../base_looks/unlit.blackbody.usda@</base>
+    )
+    {
+        float inputs:emission = 1
+        float inputs:temperature = 3500
+        asset inputs:texture_opacity = @./textures/brass_diya_lantern_opacity_1k.exr@
+    }
+}
+
