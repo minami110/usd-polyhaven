@@ -8,7 +8,7 @@
 
 class Material "base"
 {
-    float inputs:bound_ior = 1.5
+    float inputs:ior = 1.5
     asset inputs:texture_arm = @@
     asset inputs:texture_normal = @@
     token outputs:surface.connect = </base/usd.outputs:surface>
@@ -16,7 +16,7 @@ class Material "base"
     def NodeGraph "usd"
     {
         float inputs:ior = 1.5
-        float inputs:ior.connect = </base.inputs:bound_ior>
+        float inputs:ior.connect = </base.inputs:ior>
         token outputs:surface.connect = </base/usd/usd_previewsurface.outputs:surface>
 
         def Shader "usd_previewsurface"
