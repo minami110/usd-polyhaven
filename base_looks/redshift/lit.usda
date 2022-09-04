@@ -1,0 +1,115 @@
+#usda 1.0
+(
+    defaultPrim = "base"
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+)
+
+class Material "base"
+{
+    float inputs:ao_intensity = 1
+    float inputs:normal_scale = 1
+    asset inputs:texture_arm = @@
+    asset inputs:texture_basecolor = @@
+    asset inputs:texture_normal = @@
+    token outputs:Redshift:surface.connect = </base/redshift.outputs:Shader>
+
+    def NodeGraph "redshift"
+    {
+        float inputs:ao_intensity = 1
+        float inputs:ao_intensity.connect = </base.inputs:ao_intensity>
+        float inputs:normal_scale = 1
+        float inputs:normal_scale.connect = </base.inputs:normal_scale>
+        token outputs:Shader.connect = </base/redshift/rs_usd_material.outputs:Shader>
+
+        def Shader "rs_usd_material"
+        {
+            uniform token info:id = "redshift_usd_material"
+            vector3f inputs:BumpMap.connect = </base/redshift/rs_normalmap.outputs:out>
+            token inputs:Surface.connect = </base/redshift/rs_standard_material.outputs:outColor>
+            token outputs:Shader
+        }
+
+        def Shader "rs_standard_material"
+        {
+            uniform token info:id = "redshift::StandardMaterial"
+            color3f inputs:base_color.connect = </base/redshift/rs_multiply_ao.outputs:out>
+            float inputs:metalness.connect = </base/redshift/rs_sep_arm.outputs:outB>
+            float inputs:refl_roughness.connect = </base/redshift/rs_sep_arm.outputs:outG>
+            token outputs:outColor
+        }
+
+        def Shader "rs_multiply_ao"
+        {
+            uniform token info:id = "redshift::RSMathMulVector"
+            vector3f inputs:input1.connect = </base/redshift/rs_image_basecolor.outputs:outColor>
+            vector3f inputs:input2.connect = </base/redshift/rs_oneminus2.outputs:out>
+            vector3f outputs:out
+        }
+
+        def Shader "rs_image_basecolor"
+        {
+            uniform token info:id = "redshift::TextureSampler"
+            asset inputs:tex0.connect = </base.inputs:texture_basecolor>
+            color3f outputs:outColor
+        }
+
+        def Shader "rs_oneminus2"
+        {
+            uniform token info:id = "redshift::RSMathSub"
+            float inputs:input1 = 1
+            float inputs:input2.connect = </base/redshift/rs_mul.outputs:out>
+            float outputs:out
+        }
+
+        def Shader "rs_mul"
+        {
+            uniform token info:id = "redshift::RSMathMul"
+            float inputs:input1.connect = </base/redshift.inputs:ao_intensity>
+            float inputs:input2.connect = </base/redshift/rs_oneminus1.outputs:out>
+            float outputs:out
+        }
+
+        def Shader "rs_oneminus1"
+        {
+            uniform token info:id = "redshift::RSMathSub"
+            float inputs:input1 = 1
+            float inputs:input2.connect = </base/redshift/rs_sep_arm.outputs:outR>
+            float outputs:out
+        }
+
+        def Shader "rs_sep_arm"
+        {
+            uniform token info:id = "redshift::RSColorSplitter"
+            color4f inputs:input.connect = </base/redshift/rs_image_arm.outputs:outColor>
+            float outputs:outB
+            float outputs:outG
+            float outputs:outR
+        }
+
+        def Shader "rs_image_arm"
+        {
+            uniform token info:id = "redshift::TextureSampler"
+            asset inputs:tex0.connect = </base.inputs:texture_arm>
+            color3f outputs:outColor
+        }
+
+        def Shader "rs_normalmap"
+        {
+            uniform token info:id = "redshift::BumpMap"
+            color3f inputs:input.connect = </base/redshift/rs_image_normal.outputs:outColor>
+            token inputs:inputType = "1"
+            float inputs:scale.connect = </base/redshift.inputs:normal_scale>
+            vector3f outputs:out
+        }
+
+        def Shader "rs_image_normal"
+        {
+            uniform token info:id = "redshift::TextureSampler"
+            asset inputs:tex0.connect = </base.inputs:texture_normal>
+            color3f outputs:outColor
+        }
+    }
+}
+

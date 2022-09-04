@@ -1,0 +1,77 @@
+#usda 1.0
+(
+    defaultPrim = "base"
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+)
+
+class Material "base"
+{
+    float inputs:ior = 1.5
+    float inputs:normal_scale = 1
+    asset inputs:texture_arm = @@
+    asset inputs:texture_normal = @@
+    float inputs:transmission_dispersion = 0
+    token outputs:Redshift:surface.connect = </base/redshift.outputs:Shader>
+
+    def NodeGraph "redshift"
+    {
+        float inputs:ior = 1.5
+        float inputs:ior.connect = </base.inputs:ior>
+        float inputs:normal_scale = 1
+        float inputs:normal_scale.connect = </base.inputs:normal_scale>
+        float inputs:transmission_dispersion = 0
+        float inputs:transmission_dispersion.connect = </base.inputs:transmission_dispersion>
+        token outputs:Shader.connect = </base/redshift/rs_usd_material.outputs:Shader>
+
+        def Shader "rs_usd_material"
+        {
+            uniform token info:id = "redshift_usd_material"
+            vector3f inputs:BumpMap.connect = </base/redshift/rs_normalmap.outputs:out>
+            token inputs:Surface.connect = </base/redshift/rs_standard_material.outputs:outColor>
+            token outputs:Shader
+        }
+
+        def Shader "rs_standard_material"
+        {
+            uniform token info:id = "redshift::StandardMaterial"
+            float inputs:refl_ior.connect = </base/redshift.inputs:ior>
+            float inputs:refl_roughness.connect = </base/redshift/rs_sep_arm.outputs:outG>
+            float inputs:refr_abbe.connect = </base/redshift.inputs:transmission_dispersion>
+            float inputs:refr_weight = 1
+            token outputs:outColor
+        }
+
+        def Shader "rs_sep_arm"
+        {
+            uniform token info:id = "redshift::RSColorSplitter"
+            color4f inputs:input.connect = </base/redshift/rs_image_arm.outputs:outColor>
+            float outputs:outG
+        }
+
+        def Shader "rs_image_arm"
+        {
+            uniform token info:id = "redshift::TextureSampler"
+            asset inputs:tex0.connect = </base.inputs:texture_arm>
+            color3f outputs:outColor
+        }
+
+        def Shader "rs_normalmap"
+        {
+            uniform token info:id = "redshift::BumpMap"
+            color3f inputs:input.connect = </base/redshift/rs_image_normal.outputs:outColor>
+            token inputs:inputType = "1"
+            float inputs:scale.connect = </base/redshift.inputs:normal_scale>
+            vector3f outputs:out
+        }
+
+        def Shader "rs_image_normal"
+        {
+            uniform token info:id = "redshift::TextureSampler"
+            asset inputs:tex0.connect = </base.inputs:texture_normal>
+            color3f outputs:outColor
+        }
+    }
+}
+
