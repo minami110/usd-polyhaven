@@ -1,0 +1,68 @@
+#usda 1.0
+(
+    defaultPrim = "base"
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+)
+
+def Material "base"
+{
+    asset inputs:texture_arm = @@
+    asset inputs:texture_basecolor = @@
+    asset inputs:texture_normal = @@
+    token outputs:surface.connect = </base/usd.outputs:surface>
+
+    def NodeGraph "usd"
+    {
+        token outputs:surface.connect = </base/usd/usd_previewsurface.outputs:surface>
+
+        def Shader "usd_previewsurface"
+        {
+            uniform token info:id = "UsdPreviewSurface"
+            color3f inputs:diffuseColor.connect = </base/usd/usd_image_basecolor.outputs:rgb>
+            float inputs:metallic.connect = </base/usd/usd_image_arm.outputs:b>
+            normal3f inputs:normal.connect = </base/usd/usd_image_normal.outputs:rgb>
+            float inputs:occlusion.connect = </base/usd/usd_image_arm.outputs:r>
+            float inputs:roughness.connect = </base/usd/usd_image_arm.outputs:g>
+            token outputs:surface
+        }
+
+        def Shader "usd_image_basecolor"
+        {
+            uniform token info:id = "UsdUVTexture"
+            float4 inputs:fallback = (1, 0, 1, 1)
+            asset inputs:file.connect = </base.inputs:texture_basecolor>
+            float2 inputs:st.connect = </base/usd/usd_primvar_st.outputs:result>
+            vector3f outputs:rgb
+        }
+
+        def Shader "usd_primvar_st"
+        {
+            uniform token info:id = "UsdPrimvarReader_float2"
+            string inputs:varname = "st"
+            float2 outputs:result
+        }
+
+        def Shader "usd_image_arm"
+        {
+            uniform token info:id = "UsdUVTexture"
+            float4 inputs:fallback = (1, 0.2, 0, 1)
+            asset inputs:file.connect = </base.inputs:texture_arm>
+            float2 inputs:st.connect = </base/usd/usd_primvar_st.outputs:result>
+            float outputs:b
+            float outputs:g
+            float outputs:r
+        }
+
+        def Shader "usd_image_normal"
+        {
+            uniform token info:id = "UsdUVTexture"
+            float4 inputs:fallback = (0.5, 0.5, 1, 1)
+            asset inputs:file.connect = </base.inputs:texture_normal>
+            float2 inputs:st.connect = </base/usd/usd_primvar_st.outputs:result>
+            vector3f outputs:rgb
+        }
+    }
+}
+

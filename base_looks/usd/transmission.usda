@@ -1,0 +1,58 @@
+#usda 1.0
+(
+    defaultPrim = "base"
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+)
+
+def Material "base"
+{
+    float inputs:bound_ior = 1.5
+    asset inputs:texture_arm = @@
+    asset inputs:texture_normal = @@
+    token outputs:surface.connect = </base/usd.outputs:surface>
+
+    def NodeGraph "usd"
+    {
+        float inputs:ior = 1.5
+        float inputs:ior.connect = </base.inputs:bound_ior>
+        token outputs:surface.connect = </base/usd/usd_previewsurface.outputs:surface>
+
+        def Shader "usd_previewsurface"
+        {
+            uniform token info:id = "UsdPreviewSurface"
+            float inputs:ior.connect = </base/usd.inputs:ior>
+            normal3f inputs:normal.connect = </base/usd/usd_image_normal.outputs:rgb>
+            float inputs:opacity = 0.1
+            float inputs:roughness.connect = </base/usd/usd_image_arm.outputs:g>
+            token outputs:surface
+        }
+
+        def Shader "usd_image_arm"
+        {
+            uniform token info:id = "UsdUVTexture"
+            float4 inputs:fallback = (1, 0.2, 0, 1)
+            asset inputs:file.connect = </base.inputs:texture_arm>
+            float2 inputs:st.connect = </base/usd/usd_primvar_st.outputs:result>
+            float outputs:g
+        }
+
+        def Shader "usd_primvar_st"
+        {
+            uniform token info:id = "UsdPrimvarReader_float2"
+            string inputs:varname = "st"
+            float2 outputs:result
+        }
+
+        def Shader "usd_image_normal"
+        {
+            uniform token info:id = "UsdUVTexture"
+            float4 inputs:fallback = (0.5, 0.5, 1, 1)
+            asset inputs:file.connect = </base.inputs:texture_normal>
+            float2 inputs:st.connect = </base/usd/usd_primvar_st.outputs:result>
+            vector3f outputs:rgb
+        }
+    }
+}
+
