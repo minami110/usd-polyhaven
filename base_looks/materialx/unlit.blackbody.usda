@@ -1,0 +1,81 @@
+#usda 1.0
+(
+    defaultPrim = "base"
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+)
+
+class Material "base"
+{
+    float inputs:emission = 1
+    float inputs:temperature = 5000
+    asset inputs:texture_opacity = @@
+    token outputs:mtlx:surface.connect = </base/materialx.outputs:out>
+
+    def NodeGraph "materialx"
+    {
+        float inputs:emission = 1
+        float inputs:emission.connect = </base.inputs:emission>
+        float inputs:temperature = 5000
+        float inputs:temperature.connect = </base.inputs:temperature>
+        token outputs:out.connect = </base/materialx/mtlx_surface_unlit.outputs:out>
+
+        def Shader "mtlx_surface_unlit"
+        {
+            uniform token info:id = "ND_surface_unlit"
+            float inputs:emission (
+                customData = {
+                    dictionary HoudiniPreviewTags = {
+                        double default_value = 1
+                        string ogl_diff_intensity = "1"
+                    }
+                }
+            )
+            float inputs:emission.connect = </base/materialx.inputs:emission>
+            color3f inputs:emission_color (
+                customData = {
+                    dictionary HoudiniPreviewTags = {
+                        double3 default_value = (1, 1, 1)
+                        string ogl_diff = "1"
+                    }
+                }
+            )
+            color3f inputs:emission_color.connect = </base/materialx/mtlx_blackbody.outputs:out>
+            float inputs:opacity (
+                customData = {
+                    dictionary HoudiniPreviewTags = {
+                        double default_value = 1
+                        string ogl_alpha = "1"
+                    }
+                }
+            )
+            float inputs:opacity.connect = </base/materialx/mtlx_image_opacity.outputs:out>
+            float inputs:transmission (
+                customData = {
+                    dictionary HoudiniPreviewTags = {
+                        double default_value = 0
+                        string ogl_transparency = "1"
+                    }
+                }
+            )
+            token outputs:out
+        }
+
+        def Shader "mtlx_blackbody"
+        {
+            uniform token info:id = "ND_blackbody"
+            float inputs:temperature.connect = </base/materialx.inputs:temperature>
+            color3f outputs:out
+        }
+
+        def Shader "mtlx_image_opacity"
+        {
+            uniform token info:id = "ND_image_float"
+            float inputs:default = 1
+            asset inputs:file.connect = </base.inputs:texture_opacity>
+            float outputs:out
+        }
+    }
+}
+
