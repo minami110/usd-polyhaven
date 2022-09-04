@@ -1,0 +1,28 @@
+#usda 1.0
+(
+    defaultPrim = "base"
+    framesPerSecond = 24
+    metersPerUnit = 1
+    subLayers = [
+        @./redshift/transmission.usda@,
+        @./materialx/transmission.usda@,
+        @./usd/transmission.usda@
+    ]
+    timeCodesPerSecond = 24
+)
+
+class "base" (
+    assetInfo = {
+        asset identifier = @polyhaven_baselook_transmission@
+        string name = "polyhaven_baselook_transmission"
+        string version = "1.0"
+    }
+)
+{
+    float inputs:ior = 1.52
+    float inputs:normal_scale = 1
+    asset inputs:texture_arm = @@
+    asset inputs:texture_normal = @@
+    float inputs:transmission_dispersion = 0
+}
+

@@ -1,0 +1,28 @@
+#usda 1.0
+(
+    defaultPrim = "base"
+    framesPerSecond = 24
+    metersPerUnit = 1
+    subLayers = [
+        @./redshift/lit.usda@,
+        @./materialx/lit.usda@,
+        @./usd/lit.usda@
+    ]
+    timeCodesPerSecond = 24
+)
+
+class "base" (
+    assetInfo = {
+        asset identifier = @polyhaven_baselook_lit@
+        string name = "polyhaven_baselook_lit"
+        string version = "1.0"
+    }
+)
+{
+    float inputs:ao_intensity = 1
+    float inputs:normal_scale = 1
+    asset inputs:texture_arm = @@
+    asset inputs:texture_basecolor = @@
+    asset inputs:texture_normal = @@
+}
+
