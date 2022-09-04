@@ -8,6 +8,7 @@
 def "antique_ceramic_vase_01" (
     prepend apiSchemas = ["MaterialBindingAPI"]
     assetInfo = {
+        asset identifier = @antique_ceramic_vase_01@
         string name = "antique_ceramic_vase_01"
         string version = "1.0"
     }
