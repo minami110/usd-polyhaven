@@ -6,7 +6,7 @@
     timeCodesPerSecond = 24
 )
 
-def Material "base"
+class Material "base"
 {
     float inputs:bound_ior = 1.5
     asset inputs:texture_arm = @@
