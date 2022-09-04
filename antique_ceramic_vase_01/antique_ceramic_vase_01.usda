@@ -3,20 +3,38 @@
     framesPerSecond = 24
     metersPerUnit = 1
     timeCodesPerSecond = 24
-    upAxis = "Y"
 )
 
 def "antique_ceramic_vase_01" (
     prepend apiSchemas = ["MaterialBindingAPI"]
-    prepend references = @./antique_ceramic_vase_01.geo.usdc@
+    assetInfo = {
+        string name = "antique_ceramic_vase_01"
+        string version = "1.0"
+    }
+    kind = "component"
+    prepend references = [
+        @./antique_ceramic_vase_01.geo.proxy.usdc@,
+        @./antique_ceramic_vase_01.geo.usdc@
+    ]
 )
 {
     rel material:binding = </antique_ceramic_vase_01/looks/antique_ceramic_vase_01>
 
     def "looks" (
-        prepend references = @./antique_ceramic_vase_01.look.usda@</looks>
+        prepend references = @./antique_ceramic_vase_01.look.usda@
     )
     {
+    }
+
+    over "proxy"
+    {
+        uniform token purpose = "proxy"
+    }
+
+    over "mesh"
+    {
+        rel proxyPrim = </antique_ceramic_vase_01/proxy>
+        uniform token purpose = "render"
     }
 }
 

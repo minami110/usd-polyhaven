@@ -1,17 +1,20 @@
 #usda 1.0
 (
     defaultPrim = "looks"
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
 )
 
 def Scope "looks"
 {
     def "antique_ceramic_vase_01" (
-        references = @../polyheaven_base_look.usda@</base>
+        prepend references = @../base_looks/lit.usda@</base>
     )
     {
-        # Custom values
-        custom asset inputs:texture_basecolor = @./textures/antique_ceramic_vase_01_diff_1k.exr@
-        custom asset inputs:texture_arm = @./textures/antique_ceramic_vase_01_arm_1k.exr@
-        custom asset inputs:texture_normal = @./textures/antique_ceramic_vase_01_nor_gl_1k.exr@
+        asset inputs:texture_arm = @./textures/antique_ceramic_vase_01_arm_1k.exr@
+        asset inputs:texture_basecolor = @./textures/antique_ceramic_vase_01_diff_1k.exr@
+        asset inputs:texture_normal = @./textures/antique_ceramic_vase_01_nor_gl_1k.exr@
     }
 }
+
