@@ -1,0 +1,41 @@
+#usda 1.0
+(
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+)
+
+def "brass_pan_01" (
+    prepend apiSchemas = ["MaterialBindingAPI"]
+    assetInfo = {
+        asset identifier = @brass_pan_01@
+        string name = "brass_pan_01"
+        string version = "1.0"
+    }
+    kind = "component"
+    prepend references = [
+        @./brass_pan_01.geo.proxy.usdc@,
+        @./brass_pan_01.geo.usdc@
+    ]
+)
+{
+    rel material:binding = </brass_pan_01/looks/brass_pan_01>
+
+    def "looks" (
+        prepend references = @./brass_pan_01.look.usda@
+    )
+    {
+    }
+
+    over "proxy"
+    {
+        uniform token purpose = "proxy"
+    }
+
+    over "mesh"
+    {
+        rel proxyPrim = </brass_pan_01/proxy>
+        uniform token purpose = "render"
+    }
+}
+

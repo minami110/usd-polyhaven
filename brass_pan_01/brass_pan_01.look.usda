@@ -1,0 +1,20 @@
+#usda 1.0
+(
+    defaultPrim = "looks"
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+)
+
+def Scope "looks"
+{
+    def "brass_pan_01" (
+        prepend references = @../base_looks/lit.usda@</base>
+    )
+    {
+        asset inputs:texture_arm = @./textures/brass_pan_01_arm_1k.exr@
+        asset inputs:texture_basecolor = @./textures/brass_pan_01_diff_1k.exr@
+        asset inputs:texture_normal = @./textures/brass_pan_01_nor_gl_1k.exr@
+    }
+}
+
