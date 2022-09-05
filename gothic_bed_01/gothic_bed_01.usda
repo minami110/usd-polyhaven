@@ -8,6 +8,7 @@
 def "gothic_bed_01" (
     prepend apiSchemas = ["MaterialBindingAPI"]
     assetInfo = {
+        asset identifier = @gothic_bed_01@
         string name = "gothic_bed_01"
         string version = "1.0"
     }
