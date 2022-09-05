@@ -13,6 +13,7 @@ class Material "base"
     asset inputs:texture_arm = @@
     asset inputs:texture_basecolor = @@
     asset inputs:texture_normal = @@
+    asset inputs:texture_opacity = @@
     token outputs:mtlx:surface.connect = </base/materialx.outputs:out>
 
     def NodeGraph "materialx"
@@ -85,6 +86,7 @@ class Material "base"
             )
             float inputs:metalness.connect = </base/materialx/mtlx_sep_arm.outputs:outb>
             vector3f inputs:normal.connect = </base/materialx/mtlx_normalmap.outputs:out>
+            color3f inputs:opacity.connect = </base/materialx/mtlx_image_opacity.outputs:out>
             float inputs:specular (
                 customData = {
                     dictionary HoudiniPreviewTags = {
@@ -183,6 +185,14 @@ class Material "base"
             uniform token info:id = "ND_image_color3"
             color3f inputs:default = (1, 0.2, 0)
             asset inputs:file.connect = </base.inputs:texture_arm>
+            color3f outputs:out
+        }
+
+        def Shader "mtlx_image_opacity"
+        {
+            uniform token info:id = "ND_image_color3"
+            color3f inputs:default = (1, 1, 1)
+            asset inputs:file.connect = </base.inputs:texture_opacity>
             color3f outputs:out
         }
 
