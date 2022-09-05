@@ -3,11 +3,13 @@
     framesPerSecond = 24
     metersPerUnit = 1
     timeCodesPerSecond = 24
+    upAxis = "Y"
 )
 
 def "green_chair_01" (
     prepend apiSchemas = ["MaterialBindingAPI"]
     assetInfo = {
+        asset identifier = @green_chair_01@
         string name = "green_chair_01"
         string version = "1.0"
     }
