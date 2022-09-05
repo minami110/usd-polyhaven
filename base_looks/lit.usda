@@ -21,8 +21,9 @@ class "base" (
 {
     float inputs:ao_intensity = 1
     float inputs:normal_scale = 1
-    asset inputs:texture_arm = @@
-    asset inputs:texture_basecolor = @@
-    asset inputs:texture_normal = @@
+    asset inputs:texture_arm = @./textures/default_arm.ACES - ACEScg.exr@
+    asset inputs:texture_basecolor = @./textures/default_basecolor.ACES - ACEScg.exr@
+    asset inputs:texture_normal = @./textures/default_normal.ACES - ACEScg.exr@
+    asset inputs:texture_opacity = @./textures/default_opacity.ACES - ACEScg.exr@
 }
 
