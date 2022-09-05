@@ -25,13 +25,9 @@ def "brass_pot_01" (
 {
     rel material:binding = </brass_pot_01/looks/brass_pot_01>
 
-    def "looks" (
-        prepend references = @./brass_pot_01.look.usda@
+    over "body" (
+        kind = "subcomponent"
     )
-    {
-    }
-
-    over "body"
     {
         rel proxyPrim = </brass_pot_01/body/proxy>
         uniform token purpose = "render"
@@ -42,7 +38,9 @@ def "brass_pot_01" (
         }
     }
 
-    over "lid"
+    over "lid" (
+        kind = "subcomponent"
+    )
     {
         rel proxyPrim = </brass_pot_01/lid/proxy>
         uniform token purpose = "render"
@@ -52,11 +50,18 @@ def "brass_pot_01" (
             uniform token purpose = "proxy"
         }
     }
+
+    def "looks" (
+        prepend references = @./brass_pot_01.look.usda@
+    )
+    {
+    }
     variantSet "model" = {
         "bodyonly" {
-            over "lid"
+            over "lid" (
+                active = false
+            )
             {
-                token visibility = "invisible"
             }
 
         }
@@ -69,9 +74,10 @@ def "brass_pot_01" (
 
         }
         "lidonly" {
-            over "body"
+            over "body" (
+                active = false
+            )
             {
-                token visibility = "invisible"
             }
 
         }
