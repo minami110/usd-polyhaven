@@ -3,11 +3,19 @@
     framesPerSecond = 24
     metersPerUnit = 1
     timeCodesPerSecond = 24
-    upAxis = "Y"
 )
 
 def "potted_plant_02" (
-    prepend references = @./potted_plant_02.geo.usdc@
+    assetInfo = {
+        asset identifier = @potted_plant_02@
+        string name = "potted_plant_02"
+        string version = "1.0"
+    }
+    kind = "component"
+    prepend references = [
+        @./potted_plant_02.geo.usdc@,
+        @./potted_plant_02.geo.proxy.usdc@
+    ]
 )
 {
     def "looks" (
@@ -16,42 +24,39 @@ def "potted_plant_02" (
     {
     }
 
-    over "dirt"
+    over "dirt" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
     {
-        uniform token subsetFamily:materialBind:familyType = "nonOverlapping"
+        rel material:binding = </potted_plant_02/looks/pot>
+        uniform token purpose = "render"
+    }
 
-        over "material_pot" (
-            prepend apiSchemas = ["MaterialBindingAPI"]
-        )
+    over "pot" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </potted_plant_02/looks/pot>
+        rel proxyPrim = </potted_plant_02/pot/proxy>
+        uniform token purpose = "render"
+
+        over "proxy"
         {
-            uniform token familyName = "materialBind"
-            rel material:binding = </potted_plant_02/looks/pot>
+            uniform token purpose = "proxy"
         }
     }
 
-    over "pot"
+    over "leaves" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
     {
-        uniform token subsetFamily:materialBind:familyType = "nonOverlapping"
+        rel material:binding = </potted_plant_02/looks/leaves>
+        rel proxyPrim = </potted_plant_02/leaves/proxy>
+        uniform token purpose = "render"
 
-        over "material_pot" (
-            prepend apiSchemas = ["MaterialBindingAPI"]
-        )
+        over "proxy"
         {
-            uniform token familyName = "materialBind"
-            rel material:binding = </potted_plant_02/looks/pot>
-        }
-    }
-
-    over "leaves"
-    {
-        uniform token subsetFamily:materialBind:familyType = "nonOverlapping"
-
-        over "material_leaves" (
-            prepend apiSchemas = ["MaterialBindingAPI"]
-        )
-        {
-            uniform token familyName = "materialBind"
-            rel material:binding = </potted_plant_02/looks/leaves>
+            uniform token purpose = "proxy"
         }
     }
 }
