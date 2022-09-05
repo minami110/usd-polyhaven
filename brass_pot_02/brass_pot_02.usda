@@ -3,23 +3,39 @@
     framesPerSecond = 24
     metersPerUnit = 1
     timeCodesPerSecond = 24
-    upAxis = "Y"
 )
 
 def "brass_pot_02" (
     prepend apiSchemas = ["MaterialBindingAPI"]
-    prepend references = @./brass_pot_02.geo.usdc@
+    assetInfo = {
+        asset identifier = @brass_pot_02@
+        string name = "brass_pot_02"
+        string version = "1.0"
+    }
+    kind = "component"
+    prepend references = [
+        @./brass_pot_02.geo.proxy.usdc@,
+        @./brass_pot_02.geo.usdc@
+    ]
 )
 {
     rel material:binding = </brass_pot_02/looks/brass_pot_02>
 
-    def Scope "looks"
+    def "looks" (
+        prepend references = @./brass_pot_02.look.usda@
+    )
     {
-        def "brass_pot_02" (
-            prepend references = @./brass_pot_02.look.usda@
-        )
-        {
-        }
+    }
+
+    over "proxy"
+    {
+        uniform token purpose = "proxy"
+    }
+
+    over "mesh"
+    {
+        rel proxyPrim = </brass_pot_02/proxy>
+        uniform token purpose = "render"
     }
 }
 
