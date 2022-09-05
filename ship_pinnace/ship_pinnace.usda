@@ -1,0 +1,119 @@
+#usda 1.0
+(
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+)
+
+def "ship_pinnace" (
+    assetInfo = {
+        asset identifier = @ship_pinnace@
+        string name = "ship_pinnace"
+        string version = "1.0"
+    }
+    kind = "component"
+    prepend references = [
+        @./ship_pinnace.geo.usdc@,
+        @./ship_pinnace.geo.proxy.usdc@
+    ]
+)
+{
+    def "looks" (
+        prepend references = @./ship_pinnace.look.usda@
+    )
+    {
+    }
+
+    over "sails" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </ship_pinnace/looks/sails>
+        rel proxyPrim = </ship_pinnace/sails/proxy>
+        uniform token purpose = "render"
+
+        over "proxy"
+        {
+            uniform token purpose = "proxy"
+        }
+    }
+
+    over "rigging" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </ship_pinnace/looks/rigging>
+        rel proxyPrim = </ship_pinnace/rigging/proxy>
+        uniform token purpose = "render"
+
+        over "proxy"
+        {
+            uniform token purpose = "proxy"
+        }
+    }
+
+    over "interior" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </ship_pinnace/looks/interior>
+        rel proxyPrim = </ship_pinnace/interior/proxy>
+        uniform token purpose = "render"
+
+        over "proxy"
+        {
+            uniform token purpose = "proxy"
+        }
+    }
+
+    over "aft" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </ship_pinnace/looks/aft>
+        rel proxyPrim = </ship_pinnace/aft/proxy>
+        uniform token purpose = "render"
+
+        over "proxy"
+        {
+            uniform token purpose = "proxy"
+        }
+    }
+
+    over "deck" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </ship_pinnace/looks/deck>
+        rel proxyPrim = </ship_pinnace/deck/proxy>
+        uniform token purpose = "render"
+
+        over "proxy"
+        {
+            uniform token purpose = "proxy"
+        }
+    }
+
+    over "details" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </ship_pinnace/looks/details>
+        uniform token purpose = "render"
+    }
+
+    over "hull" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </ship_pinnace/looks/hull>
+        rel proxyPrim = </ship_pinnace/hull/proxy>
+        uniform token purpose = "render"
+
+        over "proxy"
+        {
+            uniform token purpose = "proxy"
+        }
+    }
+}
+

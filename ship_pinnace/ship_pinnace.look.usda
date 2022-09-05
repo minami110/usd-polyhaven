@@ -1,0 +1,75 @@
+#usda 1.0
+(
+    defaultPrim = "looks"
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+)
+
+def Scope "looks"
+{
+    def "aft" (
+        prepend references = @../base_looks/lit.usda@</base>
+    )
+    {
+        asset inputs:texture_arm = @./textures/ship_pinnace_aft_arm_1k.exr@
+        asset inputs:texture_basecolor = @./textures/ship_pinnace_aft_diff_1k.exr@
+        asset inputs:texture_normal = @./textures/ship_pinnace_aft_nor_gl_1k.exr@
+    }
+
+    def "deck" (
+        prepend references = @../base_looks/lit.usda@</base>
+    )
+    {
+        asset inputs:texture_arm = @./textures/ship_pinnace_deck_arm_1k.exr@
+        asset inputs:texture_basecolor = @./textures/ship_pinnace_deck_diff_1k.exr@
+        asset inputs:texture_normal = @./textures/ship_pinnace_deck_nor_gl_1k.exr@
+    }
+
+    def "details" (
+        prepend references = @../base_looks/lit.usda@</base>
+    )
+    {
+        asset inputs:texture_arm = @./textures/ship_pinnace_details_arm_1k.exr@
+        asset inputs:texture_basecolor = @./textures/ship_pinnace_details_diff_1k.exr@
+        asset inputs:texture_normal = @./textures/ship_pinnace_details_nor_gl_1k.exr@
+    }
+
+    def "hull" (
+        prepend references = @../base_looks/lit.usda@</base>
+    )
+    {
+        asset inputs:texture_arm = @./textures/ship_pinnace_hull_arm_1k.exr@
+        asset inputs:texture_basecolor = @./textures/ship_pinnace_hull_diff_1k.exr@
+        asset inputs:texture_normal = @./textures/ship_pinnace_hull_nor_gl_1k.exr@
+    }
+
+    def "interior" (
+        prepend references = @../base_looks/lit.usda@</base>
+    )
+    {
+        asset inputs:texture_arm = @./textures/ship_pinnace_interior_arm_1k.exr@
+        asset inputs:texture_basecolor = @./textures/ship_pinnace_interior_diff_1k.exr@
+        asset inputs:texture_normal = @./textures/ship_pinnace_interior_nor_gl_1k.exr@
+    }
+
+    def "rigging" (
+        prepend references = @../base_looks/lit.usda@</base>
+    )
+    {
+        asset inputs:texture_arm = @./textures/ship_pinnace_rigging_arm_1k.exr@
+        asset inputs:texture_basecolor = @./textures/ship_pinnace_rigging_diff_1k.exr@
+        asset inputs:texture_normal = @./textures/ship_pinnace_rigging_nor_gl_1k.exr@
+    }
+
+    def "sails" (
+        prepend references = @../base_looks/lit.usda@</base>
+    )
+    {
+        asset inputs:texture_arm = @./textures/ship_pinnace_sails_arm_1k.exr@
+        asset inputs:texture_basecolor = @./textures/ship_pinnace_sails_diff_1k.exr@
+        asset inputs:texture_normal = @./textures/ship_pinnace_sails_nor_gl_1k.exr@
+        asset inputs:texture_opacity = @./textures/ship_pinnace_sails_alpha_1k.exr@
+    }
+}
+
